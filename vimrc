@@ -1,10 +1,20 @@
-set encoding=utf8
-
-if has("syntax")
-  syntax on
+let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
+if empty(glob(data_dir . '/autoload/plug.vim'))
+  silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
-set background=dark
+"vim-plug
+call plug#begin()
+Plug 'joshdick/onedark.vim'
+call plug#end()
+
+set encoding=utf8
+
+syntax on
+
+"set background=dark
+colorscheme onedark
 
 " Uncomment the following to have Vim load indentation rules and plugins
 " according to the detected filetype.
