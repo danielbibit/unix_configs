@@ -1,0 +1,13 @@
+[user]
+	email = danielbibit@gmail.com
+	name = Daniel Moraes
+
+[url "ssh://git@gitlab.com/"]
+        insteadOf = https://gitlab.com/
+
+[url "ssh://git@gitlab.int.poli.digital/"]
+        insteadOf = https://gitlab.int.poli.digital/
+
+[safe]
+        directory = /home/daniel/Documents/__code/poli/poli3/development-poli/services/meta-whatsapp-cloud-api/contracts/
+	directory = /home/daniel/Documents/__code/poli/poli3/development-poli/services/meta-whatsapp-cloud-api/contracts

@@ -1,9 +1,9 @@
-sudo cp vimrc /etc/vim/
-sudo cp tmux.conf /etc/tmux.conf
-
 echo 'Name of the user to config:'
 read user
 
+sudo ln -sf $PWD/vimrc /etc/vim/vimrc
+sudo ln -sf $PWD/tmux.conf /etc/tmux.conf
+
 # cp .bashrc /home/$user/
 # cp .bash_profile /home/$user/
-cp .gitconfig /home/$user/
+ln -sf $PWD/.gitconfig /home/$user/.gitconfig
