@@ -148,6 +148,14 @@ export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quo
 #eval $( dircolors -b $HOME/.dir_colors )
 
 
+## Auto complete redefinition
+bind "TAB:menu-complete"
+bind "set show-all-if-ambiguous on"
+bind "set menu-complete-display-prefix on"
+bind "set colored-stats on"
+bind "set colored-completion-prefix on"
+
+
 # Alias definitions.
 alias ls='ls --color --classify'
 
