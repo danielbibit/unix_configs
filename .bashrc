@@ -1,16 +1,16 @@
 # Keychain 
 # Let  re-use ssh-agent and/or gpg-agent between logins
-/usr/bin/keychain $HOME/.ssh/id_ed25519
-source $HOME/.keychain/$HOSTNAME-sh
+# /usr/bin/keychain $HOME/.ssh/id_ed25519
+# source $HOME/.keychain/$HOSTNAME-sh
 
 ## RUN SSH ADD
-ssh-add
+ssh-add 2> /dev/null
 
 # Default Editor VIM
 export VISUAL=vim
 export EDITOR="$VISUAL"
 
-clear
+# clear
 
 # LUCKY COW
 # ANIMAL=(default tux bunny hellokitty koala moose sheep)
