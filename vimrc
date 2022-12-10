@@ -37,3 +37,7 @@ cmap w!! w !sudo tee > /dev/null %
 set listchars=tab:→\ ,eol:↲,nbsp:␣,trail:•,extends:⟩,precedes:⟨,space:.
 
 set clipboard=unnamedplus
+
+set foldmethod=indent
+
+command! -nargs=0 Sw w !sudo tee % > /dev/null
