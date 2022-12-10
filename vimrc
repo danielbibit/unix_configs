@@ -14,7 +14,7 @@ set number                     " Show current line number
 set relativenumber             " Show relative line numbers
 
 set cursorline
-hi CursorLine ctermbg=darkgrey term=none cterm=none
+"hi CursorLine ctermbg=darkgrey term=none cterm=none
 
 set showcmd             " Show (partial) command in status line.
 set showmatch           " Show matching brackets.
@@ -38,5 +38,4 @@ cmap w!! w !sudo tee > /dev/null %
 
 set listchars=tab:→\ ,eol:↲,nbsp:␣,trail:•,extends:⟩,precedes:⟨,space:.
 
-nnoremap <C-k> <C-u>
-nnoremap <C-j> <C-d>
+set clipboard=unnamedplus
