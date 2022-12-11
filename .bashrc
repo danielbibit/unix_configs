@@ -11,6 +11,11 @@ export VISUAL=vim
 export EDITOR="$VISUAL"
 
 # clear
+# Launch tmux
+if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
+#  exec tmux
+    exec tmux new-session -A -s main
+fi
 
 # LUCKY COW
 # ANIMAL=(default tux bunny hellokitty koala moose sheep)
