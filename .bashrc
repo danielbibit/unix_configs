@@ -13,8 +13,8 @@ export EDITOR="$VISUAL"
 # clear
 # Launch tmux
 if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
-#  exec tmux
-    exec tmux new-session -A -s main
+#  axec tmux
+    axec tmux new-session -A -s main
 fi
 
 # LUCKY COW
@@ -109,13 +109,71 @@ ex (){
 }
 
 # CUSTOM PS1
-git_branch() {
-	(echo -n '(' && git branch 2>/dev/null | grep '^*' | colrm 1 2 | tr -d '\n' && echo  -n ')') | sed 's/()//'
+# get current branch in git repo
+function parse_git_branch() {
+	BRANCH=`git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'`
+
+	if [ ! "${BRANCH}" == "" ]
+	then
+		STAT=`parse_git_dirty`
+		echo "(${BRANCH}${STAT})"
+	else
+		echo ""
+	fi
 }
 
+# get current status of git repo
+function parse_git_dirty {
+	status=`git status 2>&1 | tee`
+
+	dirty=`echo -n "${status}" 2> /dev/null | grep "modified:" &> /dev/null; echo "$?"`
+	untracked=`echo -n "${status}" 2> /dev/null | grep "Untracked files" &> /dev/null; echo "$?"`
+	ahead=`echo -n "${status}" 2> /dev/null | grep "Your branch is ahead of" &> /dev/null; echo "$?"`
+	newfile=`echo -n "${status}" 2> /dev/null | grep "new file:" &> /dev/null; echo "$?"`
+	renamed=`echo -n "${status}" 2> /dev/null | grep "renamed:" &> /dev/null; echo "$?"`
+	deleted=`echo -n "${status}" 2> /dev/null | grep "deleted:" &> /dev/null; echo "$?"`
+
+	bits=''
+
+	if [ "${renamed}" == "0" ]; then
+		bits=">${bits}"
+	fi
+	if [ "${ahead}" == "0" ]; then
+		bits="*${bits}"
+	fi
+	if [ "${newfile}" == "0" ]; then
+		bits="+${bits}"
+	fi
+	if [ "${untracked}" == "0" ]; then
+		bits="?${bits}"
+	fi
+	if [ "${deleted}" == "0" ]; then
+		bits="x${bits}"
+	fi
+	if [ "${dirty}" == "0" ]; then
+		bits="!${bits}"
+	fi
+	if [ ! "${bits}" == "" ]; then
+		echo " ${bits}"
+	else
+		echo ""
+	fi
+}
 
 if [ "$color_prompt" = yes ]; then
-    PS1="[\[$(tput sgr0)\]\[\033[38;5;10m\]\u\[$(tput sgr0)\]\[\033[38;5;15m\]@\[$(tput sgr0)\]\[\033[38;5;10m\]\H\[$(tput sgr0)\]\[\033[38;5;15m\]]{\[$(tput sgr0)\]\[\033[38;5;33m\]\w\[$(tput sgr0)\]\[\033[38;5;15m\]}\[$(tput sgr0)\]\[\033[38;5;226m\]\n\$(git_branch)\\$\[$(tput sgr0)\]\[\033[38;5;15m\] \[$(tput sgr0)\]"
+WHITE="\[\033[38;5;15m\]"
+GREEN="\[\033[38;5;10m\]"
+BLUE="\[\033[38;5;33m\]"
+YELLOW="\[\033[38;5;226m\]"
+TPUT="\[$(tput sgr0)\]"
+
+# PS1="[$TPUT$GREEN\u$TPUT$WHITE@$TPUT$GREEN\H$TPUT$WHITE]{$TPUT$BLUE\w$TPUT$WHITE}$TPUT$YELLOW\n\$(parse_git_branch)\\$ $TPUT"
+
+PS1="$WHITE[$GREEN\u$WHITE@$GREEN\h$WHITE]"
+PS1+="$WHITE{$BLUE\w$WHITE}"
+PS1+="\n"
+PS1+="$YELLOW\$(parse_git_branch)"
+PS1+="\\$ $TPUT"
 
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
