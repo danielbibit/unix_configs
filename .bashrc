@@ -13,8 +13,8 @@ export EDITOR="$VISUAL"
 # clear
 # Launch tmux
 if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
-#  axec tmux
-    axec tmux new-session -A -s main
+#  exec tmux
+    exec tmux new-session -A -s main
 fi
 
 # LUCKY COW
