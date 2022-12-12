@@ -17,10 +17,8 @@ export EDITOR="$VISUAL"
 #  exec tmux new-session -A -s main
 #fi
 
-
 # Disable the bell of death
 bind "set bell-style none"
-
 
 # If not running interactively, don't do anything
 case $- in
@@ -36,7 +34,7 @@ shopt -s histappend
 
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
 HISTSIZE=1000
-HISTFILESIZE=2000
+HISTFILESIZE=1000
 
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
@@ -57,12 +55,12 @@ esac
 
 if [ -n "$force_color_prompt" ]; then
     if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
-    # We have color support; assume it's compliant with Ecma-48
-    # (ISO/IEC-6429). (Lack of such support is extremely rare, and such
-    # a case would tend to support setf rather than setaf.)
-    color_prompt=yes
+        # We have color support; assume it's compliant with Ecma-48
+        # (ISO/IEC-6429). (Lack of such support is extremely rare, and such
+        # a case would tend to support setf rather than setaf.)
+        color_prompt=yes
     else
-    color_prompt=
+        color_prompt=
     fi
 fi
 
@@ -70,26 +68,34 @@ fi
 # usage: ex <file>
 ex (){
     if [ -f $1 ] ; then
-    case $1 in
-        *.tar.bz2)   tar xjf $1   ;;
-        *.tar.gz)    tar xzf $1   ;;
-        *.bz2)       bunzip2 $1   ;;
-        *.rar)       unrar x $1     ;;
-        *.gz)        gunzip $1    ;;
-        *.tar)       tar xf $1    ;;
-        *.tbz2)      tar xjf $1   ;;
-        *.tgz)       tar xzf $1   ;;
-        *.zip)       unzip $1     ;;
-        *.Z)         uncompress $1;;
-        *.7z)        7z x $1      ;;
-        *)           echo "'$1' cannot be extracted via ex()" ;;
-    esac
+        case $1 in
+            *.tar.bz2)   tar xjf $1   ;;
+            *.tar.gz)    tar xzf $1   ;;
+            *.bz2)       bunzip2 $1   ;;
+            *.rar)       unrar x $1     ;;
+            *.gz)        gunzip $1    ;;
+            *.tar)       tar xf $1    ;;
+            *.tbz2)      tar xjf $1   ;;
+            *.tgz)       tar xzf $1   ;;
+            *.zip)       unzip $1     ;;
+            *.Z)         uncompress $1;;
+            *.7z)        7z x $1      ;;
+            *)           echo "'$1' cannot be extracted via ex()" ;;
+        esac
     else
-    echo "'$1' is not a valid file"
+        echo "'$1' is not a valid file"
     fi
 }
 
 # CUSTOM PS1
+WHITE="\[\033[38;5;15m\]"
+GREEN="\[\033[38;5;10m\]"
+BLUE="\[\033[38;5;33m\]"
+YELLOW="\[\033[38;5;226m\]"
+RED="\[\033[38;5;196m\]"
+TPUT="\[$(tput sgr0)\]"
+
+
 # get current branch in git repo
 function parse_git_branch() {
     BRANCH=`git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'`
@@ -142,12 +148,6 @@ function parse_git_dirty {
 }
 
 if [ "$color_prompt" = yes ]; then
-    WHITE="\[\033[38;5;15m\]"
-    GREEN="\[\033[38;5;10m\]"
-    BLUE="\[\033[38;5;33m\]"
-    YELLOW="\[\033[38;5;226m\]"
-    TPUT="\[$(tput sgr0)\]"
-
     PS1="$WHITE[$GREEN\u$WHITE@$GREEN\h$WHITE]"
     PS1+="$WHITE{$BLUE\w$WHITE}"
     PS1+="\n"
