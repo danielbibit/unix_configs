@@ -41,3 +41,6 @@ set foldmethod=indent
 command! -nargs=0 Sw w !sudo tee % > /dev/null
 
 set nofoldenable
+
+nnoremap <C-d> <C-d>zz
+nnoremap <C-u> <C-u>zz
