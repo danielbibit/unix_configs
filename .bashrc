@@ -171,9 +171,7 @@ esac
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-    alias ls='ls --color=auto'
-    #alias dir='dir --color=auto'
-    #alias vdir='vdir --color=auto'
+    alias ls='ls --color=auto --classify'
 
     alias grep='grep --color=auto'
     alias fgrep='fgrep --color=auto'
@@ -198,12 +196,9 @@ bind "set colored-completion-prefix on"
 
 
 # Alias definitions.
-alias ls='ls --color --classify'
-
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
-alias .....='cd ../../../..'
 
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
