@@ -64,4 +64,5 @@ set nofoldenable
 nnoremap <C-d> <C-d>zz
 nnoremap <C-u> <C-u>zz
 
-autocmd BufWritePre * :%s/\s\+$//e "Remove trailing whitespaces on save
+"Remove trailing whitespaces on save
+autocmd BufWritePre * :%s/\s\+$//e
