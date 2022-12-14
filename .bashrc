@@ -175,11 +175,6 @@ fi
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
 
-#Load .dir_colors on home directory
-#LS_COLORS default is on ~/.dir_colors. Check dircolors. Check /etc/profile.d. Check /etc/DIR_COLORS
-#eval $( dircolors -b $HOME/.dir_colors )
-
-
 ## Auto complete redefinition
 bind "TAB:menu-complete"
 bind "set show-all-if-ambiguous on"
