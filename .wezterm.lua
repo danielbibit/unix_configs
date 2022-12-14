@@ -10,7 +10,7 @@ return {
     default_prog = default_prog,
     audible_bell = "Disabled",
     hide_tab_bar_if_only_one_tab = true,
-    font = wezterm.font 'Operator Mono SSm Lig Medium',
+    font = wezterm.font 'JetBrains Mono',
     font_size = 10.0,
     cursor_blink_rate = 80,
     window_padding = {
