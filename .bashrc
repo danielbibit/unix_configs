@@ -199,4 +199,8 @@ if ! shopt -oq posix; then
   fi
 fi
 
-export LS_COLORS=$LS_COLORS:'ow=36:'
+# Fixes for WSL
+if [ ! -z $WSL_DISTRO_NAME ]; then
+    export LS_COLORS=$LS_COLORS:'ow=36:'
+    bind "set colored-stats off"
+fi
