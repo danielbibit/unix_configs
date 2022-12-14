@@ -7,6 +7,8 @@ if empty(glob(data_dir . '/autoload/plug.vim'))
     autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
+set signcolumn="yes"
+
 " Setup plugins
 call plug#begin()
     Plug 'morhetz/gruvbox'
@@ -22,6 +24,7 @@ call plug#end()
 syntax on
 set background=dark
 let g:gruvbox_italic=1
+let g:gruvbox_invert_selection=0
 colorscheme gruvbox
 
 set number
@@ -66,3 +69,10 @@ nnoremap <C-u> <C-u>zz
 
 "Remove trailing whitespaces on save
 autocmd BufWritePre * :%s/\s\+$//e
+
+" NERDTree config
+" Start NERDTree and put the cursor back in the other window.
+autocmd VimEnter * NERDTree | wincmd p
+
+" Close the tab if NERDTree is the only window remaining in it.
+autocmd BufEnter * if winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
