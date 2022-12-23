@@ -9,3 +9,12 @@ Return
 ^!t::
 Run C:\Program Files\WezTerm\wezterm-gui.exe
 Return
+
+; Ctrl + alt + o => Launch VSCode
+^!o::
+Run C:\Program Files\Microsoft VS Code\Code.exe
+Return
+
+; Ctrl + alt + f1 => Switch Audio Output
+
+; Ctrl + alt + m => Toggle microphone
