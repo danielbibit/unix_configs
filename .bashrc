@@ -6,9 +6,8 @@
 # Sugest TMUX
 if [ "$SHLVL" -lt 2 ] && [ -z $TMUX ];
 then
-    echo ''
     echo '<<< Hey, maybe you want to use TMUX this session !!! >>>'
-#    echo ''
+    echo ''
 fi
 
 ## RUN SSH ADD
