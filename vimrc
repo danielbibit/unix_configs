@@ -20,6 +20,8 @@ call plug#begin()
     Plug 'vim-airline/vim-airline'
     Plug 'yggdroot/indentline'
     Plug 'sheerun/vim-polyglot'
+    Plug 'junegunn/fzf'
+    Plug 'ervandew/supertab'
 call plug#end()
 
 " Add supeior vim arline to open buffers
@@ -37,6 +39,7 @@ set relativenumber
 
 set cursorline
 
+let g:netrw_liststyle = 3
 set showcmd
 set showmatch
 set ignorecase
@@ -83,3 +86,12 @@ autocmd VimEnter * NERDTree | wincmd p
 
 " Close the tab if NERDTree is the only window remaining in it.
 autocmd BufEnter * if winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
+
+" Add Ctrl P to fzf
+nnoremap <silent> <C-p> :FZF<CR>
+
+" Close current buffer
+nnoremap <silent> <C-w> :bp<bar>sp<bar>bn<bar>bd<CR>
+
+" Select indent last selected lines
+" nnoremap > gv>
