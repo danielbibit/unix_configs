@@ -40,6 +40,7 @@ set relativenumber
 set cursorline
 
 let g:netrw_liststyle = 3
+let g:netrw_bufsettings = 'noma nomod nu nobl nowrap ro'
 set showcmd
 set showmatch
 set ignorecase
