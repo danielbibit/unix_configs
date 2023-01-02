@@ -15,6 +15,11 @@ Return
 Run C:\Program Files\Microsoft VS Code\Code.exe
 Return
 
+; Ctrl + alt + w => Launch obsidian
+^!w::
+Run C:\Users\danie\AppData\Local\Obsidian\Obsidian.exe
+Return
+
 ; Ctrl + alt + f1 => Switch Audio Output
 
 ; Ctrl + alt + m => Toggle microphone
