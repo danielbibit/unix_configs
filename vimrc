@@ -16,12 +16,12 @@ call plug#begin()
     Plug 'airblade/vim-gitgutter'
     Plug 'preservim/nerdtree'
     Plug 'mg979/vim-visual-multi', {'branch': 'master'}
-    Plug 'tpope/vim-surround'
     Plug 'vim-airline/vim-airline'
     Plug 'yggdroot/indentline'
     Plug 'sheerun/vim-polyglot'
     Plug 'junegunn/fzf'
     Plug 'ervandew/supertab'
+    Plug 'jiangmiao/auto-pairs'
 call plug#end()
 
 " Add supeior vim arline to open buffers
