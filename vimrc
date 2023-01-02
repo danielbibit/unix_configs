@@ -96,3 +96,7 @@ nnoremap <silent> <C-w> :bp<bar>sp<bar>bn<bar>bd<CR>
 
 " Select indent last selected lines
 " nnoremap > gv>
+nnoremap Q <nop>
+
+vnoremap <C-j> :m '>+1<CR>gv=gv
+vnoremap <C-k> :m '<-2<CR>gv=gv
