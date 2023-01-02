@@ -10,6 +10,10 @@ endif
 
 set signcolumn="yes"
 
+let &t_SI = "\<esc>[5 q" " I beam cursor for insert mode
+let &t_EI = "\<esc>[2 q" " block cursor for normal mode - Change to 1 for blinking cursor
+let &t_SR = "\<esc>[3 q" " underscore cursor for replace
+
 " Setup plugins
 call plug#begin()
     Plug 'morhetz/gruvbox'
@@ -22,6 +26,7 @@ call plug#begin()
     Plug 'junegunn/fzf'
     Plug 'ervandew/supertab'
     Plug 'jiangmiao/auto-pairs'
+    Plug 'preservim/nerdcommenter'
 call plug#end()
 
 " Add supeior vim arline to open buffers
@@ -53,6 +58,7 @@ set autoread
 set ruler
 
 filetype plugin indent on
+filetype plugin on
 set tabstop=4
 set shiftwidth=4
 set softtabstop=4
@@ -98,5 +104,13 @@ nnoremap <silent> <C-w> :bp<bar>sp<bar>bn<bar>bd<CR>
 " nnoremap > gv>
 nnoremap Q <nop>
 
+" Move lines when visual with C-j and C-v
 vnoremap <C-j> :m '>+1<CR>gv=gv
 vnoremap <C-k> :m '<-2<CR>gv=gv
+
+" C-o create empity line
+nnoremap <C-o> o<ESC>
+
+" C-/ comment lines
+nmap <C-_>   <Plug>NERDCommenterToggle
+vmap <C-_>   <Plug>NERDCommenterToggle<CR>gv
