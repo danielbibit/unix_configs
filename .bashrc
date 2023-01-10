@@ -186,6 +186,7 @@ export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quo
 bind "TAB:menu-complete"
 bind "set show-all-if-ambiguous on"
 bind "set menu-complete-display-prefix on"
+bind "set completion-ignore-case on"
 bind "set colored-stats on"
 bind "set colored-completion-prefix on"
 
