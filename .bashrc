@@ -4,11 +4,11 @@
 # source $HOME/.keychain/$HOSTNAME-sh
 
 # Sugest TMUX
-if [ "$SHLVL" -lt 2 ] && [ -z $TMUX ];
-then
-    echo ''
-    echo '<<< Hey, maybe you want to use TMUX this session !!! >>>'
-fi
+#if [ "$SHLVL" -lt 2 ] && [ -z $TMUX ];
+#then
+    #echo ''
+    #echo '<<< Hey, maybe you want to use TMUX this session !!! >>>'
+#fi
 
 ## RUN SSH ADD
 ssh-add 2> /dev/null
