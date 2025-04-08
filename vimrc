@@ -97,9 +97,6 @@ autocmd BufEnter * if winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTa
 " Add Ctrl P to fzf
 nnoremap <silent> <C-p> :FZF<CR>
 
-" Close current buffer
-nnoremap <silent> <C-w> :bp<bar>sp<bar>bn<bar>bd<CR>
-
 " Select indent last selected lines
 " nnoremap > gv>
 nnoremap Q <nop>
