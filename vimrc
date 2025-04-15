@@ -51,8 +51,6 @@ set showmatch
 set ignorecase
 set smartcase
 set hidden
-set mouse=a
-
 set confirm
 set autoread
 set ruler
@@ -80,10 +78,6 @@ set foldmethod=indent
 
 set nofoldenable
 
-" Centralize cursor when vertical navigating
-nnoremap <C-d> <C-d>zz
-nnoremap <C-u> <C-u>zz
-
 "Remove trailing whitespaces on save
 autocmd BufWritePre * :%s/\s\+$//e
 
@@ -93,6 +87,15 @@ autocmd BufWritePre * :%s/\s\+$//e
 
 " Close the tab if NERDTree is the only window remaining in it.
 autocmd BufEnter * if winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
+
+" ------------- Remap ----------------------
+nnoremap <SPACE> <Nop>
+
+map <SPACE> <Leader>
+
+" Centralize cursor when vertical navigating
+nnoremap <C-d> <C-d>zz
+nnoremap <C-u> <C-u>zz
 
 " Add Ctrl P to fzf
 nnoremap <silent> <C-p> :FZF<CR>
@@ -111,3 +114,9 @@ nnoremap <C-o> o<ESC>
 " C-/ comment lines
 nmap <C-_>   <Plug>NERDCommenterToggle
 vmap <C-_>   <Plug>NERDCommenterToggle<CR>gv
+
+nnoremap <leader>y "+y
+vnoremap <leader>y "+y
+
+nnoremap <leader>Y "+Y
+vnoremap <leader>Y "+Y
