@@ -212,3 +212,5 @@ if [ ! -z $WSL_DISTRO_NAME ]; then
     export LS_COLORS=$LS_COLORS:'ow=36:'
     bind "set colored-stats off"
 fi
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash

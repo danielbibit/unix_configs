@@ -8,3 +8,7 @@ ln -sf $PWD/tmux.conf /home/$(whoami)/.tmux.conf
 ln -sf $PWD/ranger/rc.conf /home/$(whoami)/.config/ranger/rc.conf
 ln -sf $PWD/.bashrc /home/$(whoami)/.bashrc
 ln -sf $PWD/.gitconfig /home/$(whoami)/.gitconfig
+
+ln -sf $PWD/nvim $HOME/.config/
+
+echo 'Done!'
