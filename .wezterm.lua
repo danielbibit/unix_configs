@@ -11,7 +11,7 @@ return {
     audible_bell = "Disabled",
     hide_tab_bar_if_only_one_tab = true,
     font = wezterm.font 'JetBrains Mono',
-    font_size = 9.0,
+    font_size = 10.0,
 
     default_cursor_style = 'BlinkingBlock',
     cursor_blink_rate = 450,
