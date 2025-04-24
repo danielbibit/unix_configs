@@ -1,13 +1,6 @@
 " Default file encoding
 set encoding=utf8
 
-" Automatic vim-plug install
-let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
-if empty(glob(data_dir . '/autoload/plug.vim'))
-    silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
-    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
-endif
-
 set signcolumn="yes"
 
 let &t_SI = "\<esc>[5 q" " I beam cursor for insert mode
