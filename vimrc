@@ -74,6 +74,10 @@ set nofoldenable
 "Remove trailing whitespaces on save
 autocmd BufWritePre * :%s/\s\+$//e
 
+"Window mangement
+set splitright
+set splitbelow
+
 " ------------- Remap ----------------------
 nnoremap <SPACE> <Nop>
 
