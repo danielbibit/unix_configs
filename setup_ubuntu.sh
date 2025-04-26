@@ -8,7 +8,7 @@ ln -sf $PWD/ranger/rc.conf $HOME/.config/ranger/rc.conf
 ln -sf $PWD/.bashrc $HOME/.bashrc
 ln -sf $PWD/nvim $HOME/.config/
 
-mkdir $HOME/.vim/config
+mkdir -p $HOME/.vim/config
 ln -sf $PWD/vim/*.vim $HOME/.vim/config/
 ln -sf $PWD/vim/vimrc $HOME/.vimrc
 
