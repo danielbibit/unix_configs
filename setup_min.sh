@@ -33,6 +33,8 @@ sed -i '/source ~\/\.vim\/config\/keymaps.vim/d' "$HOME/.vimrc"
 
 mkdir -p $HOME/.config/ranger
 ln -sf $PWD/ranger/rc.conf $HOME/.config/ranger/rc.conf
+rm -f $HOME/.config/ranger/rifle.conf
+echo "mime ^text = code \"\$@\"">> $HOME/.config/ranger/rifle.conf
 
 ln -sf $PWD/.wezterm.lua $HOME/.wezterm.lua
 ln -sf $PWD/tmux.conf $HOME/.tmux.conf
