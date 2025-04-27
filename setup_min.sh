@@ -26,10 +26,9 @@ else
 fi
 
 mkdir -p $HOME/.vim/config
-# ln -sf $PWD/vim/*.vim $HOME/.vim/config/
+ln -sf $PWD/vim/*.vim $HOME/.vim/config/
 ln -sf $PWD/vim/vimrc $HOME/.vimrc
 sed -i '/source ~\/\.vim\/config\/plugins.vim/d' "$HOME/.vimrc"
-sed -i '/source ~\/\.vim\/config\/keymaps.vim/d' "$HOME/.vimrc"
 
 mkdir -p $HOME/.config/ranger
 ln -sf $PWD/ranger/rc.conf $HOME/.config/ranger/rc.conf
