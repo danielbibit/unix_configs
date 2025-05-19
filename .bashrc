@@ -10,14 +10,15 @@ ssh-add 2> /dev/null
 export VISUAL=vim
 export EDITOR="$VISUAL"
 
-# Disable the bell of death
-bind "set bell-style none"
-
 # If not running interactively, don't do anything
 case $- in
     *i*) ;;
       *) return;;
 esac
+
+# Make sure to bind only after interactive shell verification
+# Disable the bell of death
+bind "set bell-style none"
 
 # don't put duplicate lines or lines starting with space in the history.
 HISTCONTROL=ignoreboth
@@ -207,3 +208,7 @@ if [ ! -z $WSL_DISTRO_NAME ]; then
 fi
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
+if [ -f "$HOME/bash_extension.sh" ]; then
+  source "$HOME/bash_extension.sh"
+fi
