@@ -11,7 +11,7 @@ if [ "$(id -u)" -ne 0 ]; then
 fi
 
 # List of packages to install
-PACKAGES="vim ranger xsel bash curl git"
+PACKAGES="vim ranger xsel bash curl git tar"
 
 if command -v apk >/dev/null 2>&1; then
     echo "Detected apk (Alpine Linux)"
@@ -28,8 +28,8 @@ else
 fi
 
 # install lazygit
-if not command -v lazygit >/dev/null 2>&1; then
-    LAZYGIT_VER=$(curl -s "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | \grep -Po '"tag_name": *"v\K[^"]*')
+if ! command -v lazygit >/dev/null 2>&1; then
+    LAZYGIT_VER=$(curl -s "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" |  grep '"tag_name":' | sed -E 's/.*"v([^"]+)".*/\1/')
     curl -Lo lazygit.tar.gz "https://github.com/jesseduffield/lazygit/releases/download/v${LAZYGIT_VER}/lazygit_${LAZYGIT_VER}_Linux_x86_64.tar.gz"
     tar xf lazygit.tar.gz lazygit
     $SUDO install lazygit -D -t /usr/local/bin/
@@ -40,7 +40,7 @@ else
 fi
 
 # Install television
-if not command -v tv >/dev/null 2>&1; then
+if ! command -v tv >/dev/null 2>&1; then
     TELEVISION_VER=`curl -s "https://api.github.com/repos/alexpasmantier/television/releases/latest" | grep '"tag_name":' | sed -E 's/.*"tag_name": "([^"]+)".*/\1/'`
     curl -LO https://github.com/alexpasmantier/television/releases/download/$TELEVISION_VER/tv-$TELEVISION_VER-x86_64-unknown-linux-musl.tar.gz
     tar -xzf tv-$TELEVISION_VER-x86_64-unknown-linux-musl.tar.gz
