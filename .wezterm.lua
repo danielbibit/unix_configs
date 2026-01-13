@@ -9,8 +9,8 @@ end
 
 return {
     -- fix webGL crash on windows 11 ?
-    --front_end = "WebGpu",
-    --webgpu_power_preference = "HighPerformance",
+    front_end = "WebGpu",
+    webgpu_power_preference = "HighPerformance",
 
     leader = {
         key = 'a',

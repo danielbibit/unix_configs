@@ -1,5 +1,5 @@
 ; Globals
-DesktopCount := 2       ; Windows starts with 2 desktops at boot
+DesktopCount := 4       ; Windows starts with 4 desktops at boot
 CurrentDesktop := 1     ; Desktop count is 1-indexed
 
 ;
@@ -41,7 +41,7 @@ mapDesktopsFromRegistry() {
     }
 
     i := 0
-    while (CurrentDesktopId && i < DesktopCount) {
+    while (CurrentDesktopId && i < DesktopCount + 1) {
         StartPos := (i * IdLength) + 1
         DesktopIter := SubStr(DesktopList, StartPos, IdLength)
         OutputDebug("Iterator: " DesktopIter " Index: " i)
@@ -139,3 +139,4 @@ OutputDebug("[desktop-switch][loading] desktops: " DesktopCount " current: " Cur
 ^!1::switchDesktopByNumber(1)
 ^!2::switchDesktopByNumber(2)
 ^!3::switchDesktopByNumber(3)
+^!4::switchDesktopByNumber(4)
