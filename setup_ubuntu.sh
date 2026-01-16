@@ -1,7 +1,7 @@
 # echo 'Name of the user to config:'
 # read user
 sudo apt update
-sudo apt install vim curl ranger tmux -y
+sudo apt install vim curl ranger tmux ripgrep fd-find -y
 ln -sf $PWD/.wezterm.lua $HOME/.wezterm.lua
 ln -sf $PWD/tmux.conf $HOME/.tmux.conf
 ln -sf $PWD/ranger/rc.conf $HOME/.config/ranger/rc.conf
