@@ -22,7 +22,7 @@ return {
     audible_bell = "Disabled",
     hide_tab_bar_if_only_one_tab = true,
     font = wezterm.font 'JetBrains Mono',
-    font_size = 10.0,
+    font_size = 9.5,
 
     default_cursor_style = 'BlinkingBlock',
     cursor_blink_rate = 450,
@@ -47,13 +47,13 @@ return {
         bottom = 0,
     },
 
-    window_background_opacity = 0.93,
-    text_background_opacity = 0.85,
+    window_background_opacity = 0.95,
+    text_background_opacity = 0.90,
 
-     color_scheme = "Mashup Colors (terminal.sexy)",
+     --color_scheme = "Mashup Colors (terminal.sexy)",
      --color_scheme = "Mariana",
      --color_scheme = "Macintosh (base16)",
-     --color_scheme = "MaterialDark",
+     color_scheme = "MaterialDark",
      --color_scheme = "MaterialDarker",
      --color_scheme = "MaterialOcean",
 
@@ -69,10 +69,10 @@ return {
           action = act.SplitVertical { domain = 'CurrentPaneDomain' },
         },
 
-        { key = 'H', mods = 'LEADER|SHIFT', action = act.AdjustPaneSize { 'Left', 2 } },
-        { key = 'J', mods = 'LEADER|SHIFT', action = act.AdjustPaneSize { 'Down', 2 } },
-        { key = 'K', mods = 'LEADER|SHIFT', action = act.AdjustPaneSize { 'Up', 2 } },
-        { key = 'L', mods = 'LEADER|SHIFT', action = act.AdjustPaneSize { 'Right', 2 } },
+        { key = 'H', mods = 'LEADER|SHIFT', action = act.AdjustPaneSize { 'Left', 4 } },
+        { key = 'J', mods = 'LEADER|SHIFT', action = act.AdjustPaneSize { 'Down', 4 } },
+        { key = 'K', mods = 'LEADER|SHIFT', action = act.AdjustPaneSize { 'Up', 4 } },
+        { key = 'L', mods = 'LEADER|SHIFT', action = act.AdjustPaneSize { 'Right', 4 } },
 
 
         { key = 'h', mods = 'LEADER', action = act.ActivatePaneDirection 'Left' },
