@@ -84,26 +84,26 @@ switchDesktopByNumber(targetDesktop) {
 
     ; Create missing desktops if needed
     while (DesktopCount < targetDesktop) {
+        Sleep 150             ; small delay to let Windows catch up
         Send("#^d")          ; Win + Ctrl + D
         DesktopCount++
         CurrentDesktop := DesktopCount
-        Sleep 75             ; small delay to let Windows catch up
         OutputDebug("[desktop-switch][auto-create] desktops: " DesktopCount)
     }
 
     ; Move right
     while (CurrentDesktop < targetDesktop) {
+        Sleep 250
         Send("^#{Right}")
         CurrentDesktop++
-        Sleep 250
         OutputDebug("[right] target: " targetDesktop " current: " CurrentDesktop)
     }
 
     ; Move left
     while (CurrentDesktop > targetDesktop) {
+        Sleep 250
         Send("^#{Left}")
         CurrentDesktop--
-        Sleep 250
         OutputDebug("[desktop-switch][left] target: " targetDesktop " current: " CurrentDesktop)
     }
 }
