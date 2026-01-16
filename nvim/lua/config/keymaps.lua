@@ -11,6 +11,8 @@ map("n", "<C-o>", "o<ESC>", opts)
 map("n", "<C-/>", "<cmd>call nerdcommenter#Comment('n', 'Toggle')<CR>", opts)
 map("v", "<C-/>", ":call nerdcommenter#Comment('x', 'Toggle')<CR>gv", opts)
 
+map("n", "<leader>a", 'ggVG', opts)
+
 map("n", "<leader>y", '"+y', opts)
 map("v", "<leader>y", '"+y', opts)
 map("n", "<leader>Y", '"+Y', opts)
