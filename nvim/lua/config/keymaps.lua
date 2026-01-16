@@ -20,3 +20,10 @@ map("v", "<leader>Y", '"+Y', opts)
 
 map("n", "<leader>p", '"+p', opts)
 map("v", "<leader>p", '"+p', opts)
+
+map("n", "<C-Tab>", ":bnext<CR>", opts)
+map("n", "<C-S-Tab>", ":bprevious<CR>", opts)
+
+map("n", "<leader>bn", ":bnext<CR>", opts)
+map("n", "<leader>bp", ":bprevious<CR>", opts)
+map("n", "<leader>bd", ":bdelete<CR>", opts)
