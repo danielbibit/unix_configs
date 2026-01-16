@@ -71,8 +71,8 @@ return {
 
         { key = 'H', mods = 'LEADER|SHIFT', action = act.AdjustPaneSize { 'Left', 4 } },
         { key = 'J', mods = 'LEADER|SHIFT', action = act.AdjustPaneSize { 'Down', 4 } },
-        { key = 'K', mods = 'LEADER|SHIFT', action = act.AdjustPaneSize { 'Up', 4 } },
-        { key = 'L', mods = 'LEADER|SHIFT', action = act.AdjustPaneSize { 'Right', 4 } },
+        { key = 'K', mods = 'LEADER|SHIFT', action = act.AdjustPaneSize { 'Up', 6 } },
+        { key = 'L', mods = 'LEADER|SHIFT', action = act.AdjustPaneSize { 'Right', 6 } },
 
 
         { key = 'h', mods = 'LEADER', action = act.ActivatePaneDirection 'Left' },
@@ -82,11 +82,25 @@ return {
 
 
         { key = 'n', mods = 'LEADER', action = act.SpawnTab 'CurrentPaneDomain' },
-        { key = 'x', mods = 'LEADER', action = act.CloseCurrentTab { confirm = false }},
-        { key = 'Tab', mods = 'SHIFT', action = act.ActivateTabRelative(1) },
+        { key = 'c', mods = 'LEADER', action = act.CloseCurrentTab { confirm = false }},
 
         { key = 'y', mods = 'LEADER', action = act.ActivateCopyMode },
 
         { key = 'z', mods = 'LEADER', action = act.TogglePaneZoomState },
+
+        -- Disable Ctrl+Tab / Ctrl+Shift+Tab
+        { key = 'Tab', mods = 'CTRL', action = act.DisableDefaultAssignment },
+        { key = 'Tab', mods = 'CTRL|SHIFT', action = act.DisableDefaultAssignment },
+
+        -- Alt+1-9 to switch to tabs
+        { key = '1', mods = 'LEADER', action = act.ActivateTab(0) },
+        { key = '2', mods = 'LEADER', action = act.ActivateTab(1) },
+        { key = '3', mods = 'LEADER', action = act.ActivateTab(2) },
+        { key = '4', mods = 'LEADER', action = act.ActivateTab(3) },
+        { key = '5', mods = 'LEADER', action = act.ActivateTab(4) },
+        { key = '6', mods = 'LEADER', action = act.ActivateTab(5) },
+        { key = '7', mods = 'LEADER', action = act.ActivateTab(6) },
+        { key = '8', mods = 'LEADER', action = act.ActivateTab(7) },
+        { key = '9', mods = 'LEADER', action = act.ActivateTab(8) },
     },
 }
