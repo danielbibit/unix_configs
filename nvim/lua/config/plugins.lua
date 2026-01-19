@@ -10,8 +10,19 @@ return {
     build = ":TSUpdate",
     config = function()
       local parsers = {
-        "lua", "php", "python", "javascript", "typescript", "bash",
-        "markdown", "json", "yaml", "html", "css", "dockerfile", "vim"
+        "lua",
+        "php",
+        "python",
+        "javascript",
+        "typescript",
+        "bash",
+        "markdown",
+        "json",
+        "yaml",
+        "html",
+        "css",
+        "dockerfile",
+        "vim"
       }
       require("nvim-treesitter").install(parsers)
       vim.api.nvim_create_autocmd("FileType", {
@@ -23,8 +34,6 @@ return {
   },
 
   { "airblade/vim-gitgutter" },
-
-  { "preservim/nerdtree" },
 
   { "mg979/vim-visual-multi", branch = "master" },
 
@@ -42,6 +51,8 @@ return {
   { "jiangmiao/auto-pairs" },
 
   { "preservim/nerdcommenter" },
+
+  { "tpope/vim-surround" },
 
   {
     "navarasu/onedark.nvim",
@@ -107,7 +118,16 @@ return {
   {
     "kelly-lin/ranger.nvim",
     config = function()
-      require("ranger-nvim").setup({ replace_netrw = false })
+      require("ranger-nvim").setup({ 
+          replace_netrw = false,
+          ui = {
+            border = "rounded",
+            height = 0.8,
+            width = 0.8,
+            x = 0.5,
+            y = 0.5
+          }
+      })
       vim.api.nvim_set_keymap("n", "<leader>e", "", {
         noremap = true,
         callback = function()
@@ -115,5 +135,13 @@ return {
         end,
       })
     end,
+  },
+
+  {
+    "folke/persistence.nvim",
+    event = "BufReadPre", -- this will only start session saving when an actual file was opened
+    opts = {
+      -- add any custom options here
+    }
   }
 }
