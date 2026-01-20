@@ -1,3 +1,16 @@
+-- Disable netrw (built-in file explorer)
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
+-- No buffer when entering a directory
+vim.api.nvim_create_autocmd("BufEnter", {
+  callback = function()
+    if vim.fn.isdirectory(vim.fn.expand("%")) == 1 then
+      vim.cmd("bwipeout!")
+    end
+  end,
+})
+
 local opt = vim.opt
 opt.encoding = "utf-8"
 opt.signcolumn = "yes"

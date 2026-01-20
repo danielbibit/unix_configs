@@ -15,7 +15,7 @@ return {
     leader = {
         key = 'a',
         mods = 'CTRL',
-        timeout_milliseconds = 1000,
+        timeout_milliseconds = 3000,
     },
 
     default_prog = default_prog,
