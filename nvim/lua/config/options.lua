@@ -1,3 +1,16 @@
+-- Disable netrw (built-in file explorer)
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
+-- No buffer when entering a directory
+vim.api.nvim_create_autocmd("BufEnter", {
+  callback = function()
+    if vim.fn.isdirectory(vim.fn.expand("%")) == 1 then
+      vim.cmd("bwipeout!")
+    end
+  end,
+})
+
 local opt = vim.opt
 opt.encoding = "utf-8"
 opt.signcolumn = "yes"
@@ -32,15 +45,13 @@ opt.listchars = {
 opt.foldmethod = "indent"
 opt.foldenable = false
 opt.background = "dark"
-vim.cmd("syntax on")
-vim.cmd("filetype plugin indent on")
 
--- Cursor styles
-vim.cmd([[
-let &t_SI = "\<esc>[5 q"
-let &t_EI = "\<esc>[2 q"
-let &t_SR = "\<esc>[3 q"
-]])
+opt.colorcolumn = "120"
+
+vim.o.syntax = "on"
+vim.o.filetype = "on"
+
+vim.o.guicursor = "n-v-c:block,i-ci-ve:ver25,r-cr-o:hor20"
 
 local function paste()
   return {
@@ -49,17 +60,24 @@ local function paste()
   }
 end
 
-vim.g.clipboard = {
-  name = 'OSC 52',
-  copy = {
-    ['+'] = require('vim.ui.clipboard.osc52').copy('+'),
-    ['*'] = require('vim.ui.clipboard.osc52').copy('*'),
-  },
-  paste = {
-    ['+'] = require('vim.ui.clipboard.osc52').paste('+'),
-    ['*'] = require('vim.ui.clipboard.osc52').paste('*'),
-    --['+'] = paste,
-    --['*'] = paste,
-  },
-}
+-- vim.g.clipboard = {
+--   name = 'OSC 52',
+--   copy = {
+--     ['+'] = require('vim.ui.clipboard.osc52').copy('+'),
+--     ['*'] = require('vim.ui.clipboard.osc52').copy('*'),
+--   },
+--   paste = {
+--     ['+'] = require('vim.ui.clipboard.osc52').paste('+'),
+--     ['*'] = require('vim.ui.clipboard.osc52').paste('*'),
+--     --['+'] = paste,
+--     --['*'] = paste,
+--   },
+-- }
+-- Disable conceal for markdown files (indentline sets conceallevel)
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = { "markdown" },
+  callback = function()
+    vim.opt_local.conceallevel = 0
+  end,
+})
 
