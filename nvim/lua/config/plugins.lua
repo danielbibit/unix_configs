@@ -73,6 +73,7 @@ return {
       require("telescope").setup({
         defaults = {
           hidden = true,
+          file_ignore_patterns = { "%.git/" },
         },
         pickers = {
           find_files = {
@@ -83,12 +84,61 @@ return {
           },
         },
       })
+
+      -- Show git diff of current buffer (side-by-side with colors)
+      vim.api.nvim_create_user_command("GitDiffBuffer", function()
+        local file = vim.fn.expand("%:p")
+        local filetype = vim.bo.filetype
+        if file == "" then
+          vim.notify("No file in current buffer", vim.log.levels.WARN)
+          return
+        end
+        -- Start diff mode on current buffer
+        vim.cmd("diffthis")
+        -- Open vertical split with git HEAD version
+        vim.cmd("vsplit | enew")
+        vim.bo.buftype = "nofile"
+        vim.bo.bufhidden = "wipe"
+        vim.bo.filetype = filetype
+        vim.cmd("r !git show HEAD:" .. vim.fn.shellescape(vim.fn.fnamemodify(file, ":.")))
+        vim.cmd("1delete")
+        vim.cmd("diffthis")
+        vim.cmd("normal! gg")
+      end, {})
+
+      -- Open all modified git files in buffers
+      vim.api.nvim_create_user_command("GitOpenModified", function()
+        local handle = io.popen("git diff --name-only 2>/dev/null")
+        if not handle then return end
+        local result = handle:read("*a")
+        handle:close()
+
+        local files = {}
+        for file in result:gmatch("[^\r\n]+") do
+          if vim.fn.filereadable(file) == 1 then
+            table.insert(files, file)
+          end
+        end
+
+        if #files == 0 then
+          vim.notify("No modified git files found", vim.log.levels.INFO)
+          return
+        end
+
+        for _, file in ipairs(files) do
+          vim.cmd("edit " .. vim.fn.fnameescape(file))
+        end
+        vim.notify("Opened " .. #files .. " modified file(s)", vim.log.levels.INFO)
+      end, {})
     end,
     keys = {
       { "<leader>ff", "<cmd>Telescope find_files<cr>", desc = "Find files" },
       { "<leader>fg", "<cmd>Telescope live_grep<cr>", desc = "Live grep" },
       { "<leader>fb", "<cmd>Telescope buffers<cr>", desc = "Buffers" },
       { "<leader>fh", "<cmd>Telescope help_tags<cr>", desc = "Help tags" },
+      { "<leader>fs", "<cmd>Telescope git_status<cr>", desc = "Git status" },
+      { "<leader>fm", "<cmd>GitOpenModified<cr>", desc = "Open all modified git files" },
+      { "<leader>fd", "<cmd>GitDiffBuffer<cr>", desc = "Git diff current buffer" },
     },
   },
 
