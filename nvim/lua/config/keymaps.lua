@@ -12,8 +12,12 @@ map("n", "<C-p>", ":FZF<CR>", opts)
 map("v", "<C-j>", ":m '>+1<CR>gv=gv", opts)
 map("v", "<C-k>", ":m '<-2<CR>gv=gv", opts)
 map("n", "<C-o>", "o<ESC>", opts)
+
+-- Map both <C-/> and <C-_> for cross-platform compatibility (macOS sends <C-/>)
 map("n", "<C-/>", "<cmd>call nerdcommenter#Comment('n', 'Toggle')<CR>", opts)
 map("v", "<C-/>", ":call nerdcommenter#Comment('x', 'Toggle')<CR>gv", opts)
+map("n", "<C-_>", "<cmd>call nerdcommenter#Comment('n', 'Toggle')<CR>", opts)
+map("v", "<C-_>", ":call nerdcommenter#Comment('x', 'Toggle')<CR>gv", opts)
 
 map("n", "<leader>a", 'ggVG', opts)
 
