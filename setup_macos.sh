@@ -3,6 +3,9 @@ defaults write com.apple.dock autohide-delay -float 0;
 defaults write com.apple.dock autohide-time-modifier -int 0;
 killall Dock
 
+# Remove hold key to show symbol
+defaults write -g ApplePressAndHoldEnabled -bool false
+
 brew install git
 brew install mac-mouse-fix
 brew install neovim
