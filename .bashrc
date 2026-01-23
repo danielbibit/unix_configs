@@ -1,8 +1,3 @@
-# Keychain
-# Let  re-use ssh-agent and/or gpg-agent between logins
-# /usr/bin/keychain $HOME/.ssh/id_ed25519
-# source $HOME/.keychain/$HOSTNAME-sh
-
 ## RUN SSH ADD
 ssh-add 2> /dev/null
 
@@ -186,6 +181,7 @@ bind "set colored-completion-prefix on"
 
 
 # Alias definitions.
+alias h='history 1'
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
@@ -200,12 +196,6 @@ if ! shopt -oq posix; then
   elif [ -f /etc/bash_completion ]; then
     . /etc/bash_completion
   fi
-fi
-
-# Fixes for WSL
-if [ ! -z $WSL_DISTRO_NAME ]; then
-    export LS_COLORS=$LS_COLORS:'ow=36:'
-    bind "set colored-stats off"
 fi
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
