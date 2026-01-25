@@ -1,0 +1,13 @@
+confirm-close-surface = false
+
+font-size = 13
+
+clipboard-write = allow
+clipboard-read = allow
+
+cursor-style = block
+cursor-style-blink = true
+shell-integration-features = no-cursor
+
+mouse-scroll-multiplier = 0.4
+

@@ -5,8 +5,25 @@ ssh-add 2> /dev/null
 export VISUAL=vim
 export EDITOR="$VISUAL"
 
+# Fix lazygit not loading config from ~/.config
+export XDG_CONFIG_HOME="$HOME/.config"
+
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
+
+if [[ -z "$TMUX" ]]; then
+  case "$TERM_PROGRAM" in
+    WezTerm)
+      tmux new-session -A -s WezDefault && exit
+      ;;
+    ghostty)
+      tmux new-session -A -s GhosttyDefault && exit
+      ;;
+  esac
+fi
+
+# EMACS keybinding on shell
+bindkey -e
 
 # Disable the "bell of death"
 unsetopt beep
@@ -50,14 +67,14 @@ setopt PROMPT_SUBST # Required to run functions inside the prompt
 function parse_git_dirty() {
     local g_out=$(git status 2>&1)
     local bits=''
-    
+
     [[ "$g_out" =~ "renamed:" ]] && bits=">$bits"
     [[ "$g_out" =~ "ahead of" ]] && bits="*$bits"
     [[ "$g_out" =~ "new file:" ]] && bits="+$bits"
     [[ "$g_out" =~ "Untracked files" ]] && bits="?$bits"
     [[ "$g_out" =~ "deleted:" ]] && bits="x$bits"
     [[ "$g_out" =~ "modified:" ]] && bits="!$bits"
-    
+
     if [[ -n $bits ]]; then
         echo " $bits"
     else

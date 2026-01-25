@@ -13,6 +13,7 @@ brew install lazygit
 brew install ranger
 brew install tmux
 brew install orbstack
+brew install tree-sitter-cli
 
 brew install --cask karabiner-elements
 brew install --cask betterdisplay
@@ -34,4 +35,6 @@ mkdir -p $HOME/.vim/config
 ln -sf $PWD/vim/*.vim $HOME/.vim/config/
 ln -sf $PWD/vim/vimrc $HOME/.vimrc
 
+mkdir -p $HOME/.config/ghostty
+ln -sf $PWD/ghostty $HOME/.config/ghostty/config
 echo 'Done!'
