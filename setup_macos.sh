@@ -36,5 +36,5 @@ ln -sf $PWD/vim/*.vim $HOME/.vim/config/
 ln -sf $PWD/vim/vimrc $HOME/.vimrc
 
 mkdir -p $HOME/.config/ghostty
-ln -sf $PWD/ghostty $HOME/.config/ghostty/config
+ln -sf $PWD/ghostty/ghostty_macos $HOME/.config/ghostty/config
 echo 'Done!'
