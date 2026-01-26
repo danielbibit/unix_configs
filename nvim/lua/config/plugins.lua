@@ -74,6 +74,11 @@ return {
         defaults = {
           hidden = true,
           file_ignore_patterns = { "%.git/" },
+          mappings = {
+              ['i'] = {
+                  ["<CR>"] = utils.plugins.telescope_open_single_or_multi
+              }
+          }
         },
         pickers = {
           find_files = {
@@ -131,12 +136,15 @@ return {
         vim.notify("Opened " .. #files .. " modified file(s)", vim.log.levels.INFO)
       end, {})
     end,
+
     keys = {
       { "<leader>ff", "<cmd>Telescope find_files<cr>", desc = "Find files" },
       { "<leader>fg", "<cmd>Telescope live_grep<cr>", desc = "Live grep" },
       { "<leader>fb", "<cmd>Telescope buffers<cr>", desc = "Buffers" },
       { "<leader>fh", "<cmd>Telescope help_tags<cr>", desc = "Help tags" },
+
       { "<leader>fs", "<cmd>Telescope git_status<cr>", desc = "Git status" },
+
       { "<leader>fm", "<cmd>GitOpenModified<cr>", desc = "Open all modified git files" },
       { "<leader>fd", "<cmd>GitDiffBuffer<cr>", desc = "Git diff current buffer" },
     },
@@ -156,7 +164,7 @@ return {
         "nvim-lua/plenary.nvim",
     },
     keys = {
-        { "<leader>g", "<cmd>LazyGit<cr>", desc = "LazyGit" }
+        { "<leader>gg", "<cmd>LazyGit<cr>", desc = "LazyGit" }
     }
   },
 
@@ -168,7 +176,7 @@ return {
   {
     "kelly-lin/ranger.nvim",
     config = function()
-      require("ranger-nvim").setup({ 
+      require("ranger-nvim").setup({
           replace_netrw = false,
           ui = {
             border = "rounded",

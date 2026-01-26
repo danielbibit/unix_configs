@@ -58,7 +58,7 @@ end
 
 if is_darwin then
     -- temp fix for hidpi difference on macos and 1440p display
-	config.font_size = 12
+	config.font_size = 14
 end
 
 --config.leader = {
