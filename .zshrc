@@ -132,3 +132,6 @@ alias uvr='uv run'
 if [ -f "$HOME/zsh_extension.sh" ]; then
     source "$HOME/zsh_extension.sh"
 fi
+
+# load uv binary
+[ -f "$HOME/.local/bin/env" ] && . "$HOME/.local/bin/env"

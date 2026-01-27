@@ -214,3 +214,6 @@ fi
 if [ -f "$HOME/bash_extension.sh" ]; then
   source "$HOME/bash_extension.sh"
 fi
+
+# Load uv binary
+[ -f "$HOME/.local/bin/env" ] && . "$HOME/.local/bin/env"

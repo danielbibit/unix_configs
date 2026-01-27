@@ -6,6 +6,10 @@ map("n", "q:", "<nop>", opts)
 map("n", "q/", "<nop>", opts)
 map("n", "q?", "<nop>", opts)
 
+map("n", "<C-s>", ":w<CR>", opts)
+map("i", "<C-s>", "<Esc>:w<CR>a", opts)
+map("v", "<C-s>", "<Esc>:w<CR>gv", opts)
+
 map("n", "<C-d>", "<C-d>zz", opts)
 map("n", "<C-u>", "<C-u>zz", opts)
 map("n", "<C-p>", ":FZF<CR>", opts)
