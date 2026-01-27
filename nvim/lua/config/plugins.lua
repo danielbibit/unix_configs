@@ -37,10 +37,7 @@ return {
 
   { "mg979/vim-visual-multi", branch = "master" },
 
-  { "vim-airline/vim-airline", config = function()
-      vim.g["airline#extensions#tabline#enabled"] = 1
-    end
-  },
+  { "vim-airline/vim-airline" },
 
   { "yggdroot/indentline" },
 
@@ -201,5 +198,23 @@ return {
     opts = {
       -- add any custom options here
     }
+  },
+  {
+    'akinsho/bufferline.nvim',
+    version = "*",
+    dependencies = 'nvim-tree/nvim-web-devicons',
+    config = function()
+      -- Set up bufferline
+      require("bufferline").setup({
+        options = {
+          mode = "buffers", -- or "tabs"
+          separator_style = "slant", -- options: "slant" | "slope" | "thick" | "thin"
+          always_show_bufferline = true,
+          show_buffer_close_icons = true,
+          show_close_icon = true,
+          color_icons = true,
+        }
+      })
+    end
   }
 }
