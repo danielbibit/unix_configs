@@ -37,7 +37,17 @@ return {
 
   { "mg979/vim-visual-multi", branch = "master" },
 
-  { "vim-airline/vim-airline" },
+  {
+    'nvim-lualine/lualine.nvim',
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
+    config = function()
+        require("lualine").setup {
+            options = {
+                theme = "onedark"
+            }
+        }
+    end,
+  },
 
   { "yggdroot/indentline" },
 
@@ -204,7 +214,6 @@ return {
     version = "*",
     dependencies = 'nvim-tree/nvim-web-devicons',
     config = function()
-      -- Set up bufferline
       require("bufferline").setup({
         options = {
           mode = "buffers", -- or "tabs"
