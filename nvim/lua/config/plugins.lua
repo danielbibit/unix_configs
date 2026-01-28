@@ -21,7 +21,6 @@ return {
         "yaml",
         "html",
         "css",
-        "dockerfile",
         "vim"
       }
       require("nvim-treesitter").install(parsers)
@@ -44,6 +43,11 @@ return {
         require("lualine").setup {
             options = {
                 theme = "onedark"
+            },
+            sections = {
+              lualine_c = {
+                { "filename", path = 3 }
+              }
             }
         }
     end,

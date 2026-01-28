@@ -37,4 +37,9 @@ ln -sf $PWD/vim/vimrc $HOME/.vimrc
 
 mkdir -p $HOME/.config/ghostty
 ln -sf $PWD/ghostty/ghostty_macos $HOME/.config/ghostty/config
+
+#Gnu tar for ansible
+brew install gnu-tar
+export PATH="/usr/local/opt/gnu-tar/libexec/gnubin:$PATH"
+
 echo 'Done!'
