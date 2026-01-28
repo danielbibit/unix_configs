@@ -101,27 +101,6 @@ return {
         },
       })
 
-      -- Show git diff of current buffer (side-by-side with colors)
-      vim.api.nvim_create_user_command("GitDiffBuffer", function()
-        local file = vim.fn.expand("%:p")
-        local filetype = vim.bo.filetype
-        if file == "" then
-          vim.notify("No file in current buffer", vim.log.levels.WARN)
-          return
-        end
-        -- Start diff mode on current buffer
-        vim.cmd("diffthis")
-        -- Open vertical split with git HEAD version
-        vim.cmd("vsplit | enew")
-        vim.bo.buftype = "nofile"
-        vim.bo.bufhidden = "wipe"
-        vim.bo.filetype = filetype
-        vim.cmd("r !git show HEAD:" .. vim.fn.shellescape(vim.fn.fnamemodify(file, ":.")))
-        vim.cmd("1delete")
-        vim.cmd("diffthis")
-        vim.cmd("normal! gg")
-      end, {})
-
       -- Open all modified git files in buffers
       vim.api.nvim_create_user_command("GitOpenModified", function()
         local handle = io.popen("git diff --name-only 2>/dev/null")
@@ -157,7 +136,6 @@ return {
       { "<leader>fs", "<cmd>Telescope git_status<cr>", desc = "Git status" },
 
       { "<leader>fm", "<cmd>GitOpenModified<cr>", desc = "Open all modified git files" },
-      { "<leader>fd", "<cmd>GitDiffBuffer<cr>", desc = "Git diff current buffer" },
     },
   },
 
@@ -229,5 +207,12 @@ return {
         }
       })
     end
+  },
+  {
+      "tpope/vim-fugitive",
+      config = function()
+        -- Set a shortcut for the main Git status window
+        vim.keymap.set("n", "<leader>gd", vim.cmd.Gdiffsplit)
+      end
   }
 }
