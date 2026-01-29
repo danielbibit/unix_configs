@@ -101,29 +101,46 @@ return {
         },
       })
 
-      -- Open all modified git files in buffers
+      -- Open all modified and untracked git files in buffers
       vim.api.nvim_create_user_command("GitOpenModified", function()
-        local handle = io.popen("git diff --name-only 2>/dev/null")
-        if not handle then return end
-        local result = handle:read("*a")
-        handle:close()
-
         local files = {}
-        for file in result:gmatch("[^\r\n]+") do
-          if vim.fn.filereadable(file) == 1 then
-            table.insert(files, file)
+        local seen = {}
+
+        -- Get modified files
+        local handle = io.popen("git diff --name-only 2>/dev/null")
+        if handle then
+          local result = handle:read("*a")
+          handle:close()
+          for file in result:gmatch("[^\r\n]+") do
+            if vim.fn.filereadable(file) == 1 and not seen[file] then
+              table.insert(files, file)
+              seen[file] = true
+            end
+          end
+        end
+
+        -- Get untracked files
+        handle = io.popen("git ls-files --others --exclude-standard 2>/dev/null")
+        if handle then
+          local result = handle:read("*a")
+          handle:close()
+          for file in result:gmatch("[^\r\n]+") do
+            if vim.fn.filereadable(file) == 1 and not seen[file] then
+              table.insert(files, file)
+              seen[file] = true
+            end
           end
         end
 
         if #files == 0 then
-          vim.notify("No modified git files found", vim.log.levels.INFO)
+          vim.notify("No modified or untracked git files found", vim.log.levels.INFO)
           return
         end
 
         for _, file in ipairs(files) do
           vim.cmd("edit " .. vim.fn.fnameescape(file))
         end
-        vim.notify("Opened " .. #files .. " modified file(s)", vim.log.levels.INFO)
+        vim.notify("Opened " .. #files .. " modified/untracked file(s)", vim.log.levels.INFO)
       end, {})
     end,
 
@@ -135,7 +152,7 @@ return {
 
       { "<leader>fs", "<cmd>Telescope git_status<cr>", desc = "Git status" },
 
-      { "<leader>fm", "<cmd>GitOpenModified<cr>", desc = "Open all modified git files" },
+      { "<leader>fm", "<cmd>GitOpenModified<cr>", desc = "Open all modified/untracked git files" },
     },
   },
 
