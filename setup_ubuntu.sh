@@ -13,4 +13,6 @@ mkdir -p $HOME/.vim/config
 ln -sf $PWD/vim/*.vim $HOME/.vim/config/
 ln -sf $PWD/vim/vimrc $HOME/.vimrc
 
+mkdir -p $HOME/.config/ghostty
+ln -sf $PWD/ghostty/ghostty_linux $HOME/.config/ghostty/config
 echo 'Done!'

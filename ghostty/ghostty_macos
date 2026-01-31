@@ -1,0 +1,18 @@
+confirm-close-surface = false
+
+font-size = 14
+
+clipboard-write = allow
+clipboard-read = allow
+
+cursor-style = block
+cursor-style-blink = true
+shell-integration-features = no-cursor
+
+mouse-scroll-multiplier = 0.4
+
+background-opacity = 0.95
+
+# ghostty +list-themes
+# theme = Atom One Dark
+# theme = Material Design Colors

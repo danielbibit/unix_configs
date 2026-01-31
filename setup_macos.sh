@@ -13,6 +13,7 @@ brew install lazygit
 brew install ranger
 brew install tmux
 brew install orbstack
+brew install tree-sitter-cli
 
 brew install --cask karabiner-elements
 brew install --cask betterdisplay
@@ -33,5 +34,12 @@ ln -sf $PWD/lazygit.yml /$HOME/.config/lazygit/config.yml
 mkdir -p $HOME/.vim/config
 ln -sf $PWD/vim/*.vim $HOME/.vim/config/
 ln -sf $PWD/vim/vimrc $HOME/.vimrc
+
+mkdir -p $HOME/.config/ghostty
+ln -sf $PWD/ghostty/ghostty_macos $HOME/.config/ghostty/config
+
+#Gnu tar for ansible
+brew install gnu-tar
+export PATH="/usr/local/opt/gnu-tar/libexec/gnubin:$PATH"
 
 echo 'Done!'

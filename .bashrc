@@ -11,6 +11,17 @@ case $- in
       *) return;;
 esac
 
+if [[ -z "$TMUX" ]]; then
+  case "$TERM_PROGRAM" in
+    WezTerm)
+      tmux new-session -A -s WezDefault && exit
+      ;;
+    ghostty)
+      tmux new-session -A -s GhosttyDefault && exit
+      ;;
+  esac
+fi
+
 # Make sure to bind only after interactive shell verification
 # Disable the bell of death
 bind "set bell-style none"
@@ -203,3 +214,6 @@ fi
 if [ -f "$HOME/bash_extension.sh" ]; then
   source "$HOME/bash_extension.sh"
 fi
+
+# Load uv binary
+[ -f "$HOME/.local/bin/env" ] && . "$HOME/.local/bin/env"

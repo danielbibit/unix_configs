@@ -28,11 +28,11 @@ opt.ruler = true
 opt.tabstop = 4
 opt.shiftwidth = 4
 opt.softtabstop = 4
+
 opt.expandtab = true
 opt.autoindent = true
 opt.smartindent = true
-opt.clipboard = "unnamedplus"
---opt.clipboard = "unnamed"
+
 opt.listchars = {
   tab = "→ ",
   eol = "↲",
@@ -53,26 +53,32 @@ vim.o.filetype = "on"
 
 vim.o.guicursor = "n-v-c:block,i-ci-ve:ver25,r-cr-o:hor20"
 
-local function paste()
-  return {
-    vim.fn.split(vim.fn.getreg(""), "\n"),
-    vim.fn.getregtype(""),
-  }
-end
+-- Revisit this if wezterm accepts reading from clipboard.
+vim.g.clipboard = {
+	name = 'OSC 52',
+	copy = {
+		['+'] = require('vim.ui.clipboard.osc52').copy('+'),
+		['*'] = require('vim.ui.clipboard.osc52').copy('*'),
+	},
+	-- Forces tmux to sync the clipboard to the OS clipboard to respond with the correct data
+	paste = {
+        ['+'] = function()
+            if vim.env.TMUX then
+                os.execute("tmux refresh-client -l")
+                vim.wait(5)
+            end
+            return require('vim.ui.clipboard.osc52').paste('+')()
+        end,
+        ['*'] = function()
+            if vim.env.TMUX then
+                os.execute("tmux refresh-client -l")
+                vim.wait(5)
+            end
+            return require('vim.ui.clipboard.osc52').paste('*')()
+        end,
+    },
+}
 
--- vim.g.clipboard = {
---   name = 'OSC 52',
---   copy = {
---     ['+'] = require('vim.ui.clipboard.osc52').copy('+'),
---     ['*'] = require('vim.ui.clipboard.osc52').copy('*'),
---   },
---   paste = {
---     ['+'] = require('vim.ui.clipboard.osc52').paste('+'),
---     ['*'] = require('vim.ui.clipboard.osc52').paste('*'),
---     --['+'] = paste,
---     --['*'] = paste,
---   },
--- }
 -- Disable conceal for markdown files (indentline sets conceallevel)
 vim.api.nvim_create_autocmd("FileType", {
   pattern = { "markdown" },

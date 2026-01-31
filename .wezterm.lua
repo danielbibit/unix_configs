@@ -9,11 +9,7 @@ local is_darwin <const> = wezterm.target_triple:find("darwin") ~= nil
 local is_windows <const> = wezterm.target_triple:find("x86_64-pc-windows-msvc") ~= nil
 local is_linux <const> = wezterm.target_triple:find("x86_64-unknown-linux-gnu") ~= nil
 
-config.leader = {
-  key = 'a',
-  mods = 'CTRL',
-  timeout_milliseconds = 3000,
-}
+config.window_close_confirmation = 'NeverPrompt'
 
 config.audible_bell = "Disabled"
 config.hide_tab_bar_if_only_one_tab = true
@@ -62,8 +58,14 @@ end
 
 if is_darwin then
     -- temp fix for hidpi difference on macos and 1440p display
-    config.font_size = 14
+	config.font_size = 14
 end
+
+--config.leader = {
+  --key = 'a',
+  --mods = 'CTRL',
+  --timeout_milliseconds = 3000,
+--}
 
 config.keys = {
   {
