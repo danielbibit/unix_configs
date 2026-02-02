@@ -191,28 +191,49 @@ return {
 		lazy = false,
 	},
 
+	--{
+		--"kelly-lin/ranger.nvim",
+		--config = function()
+			--require("ranger-nvim").setup({
+				--replace_netrw = false,
+				--ui = {
+					--border = "rounded",
+					--height = 0.8,
+					--width = 0.8,
+					--x = 0.5,
+					--y = 0.5,
+				--},
+			--})
+			--vim.api.nvim_set_keymap("n", "<leader>e", "", {
+				--noremap = true,
+				--callback = function()
+					--require("ranger-nvim").open(true)
+				--end,
+			--})
+		--end,
+	--},
 	{
-		"kelly-lin/ranger.nvim",
-		config = function()
-			require("ranger-nvim").setup({
-				replace_netrw = false,
-				ui = {
-					border = "rounded",
-					height = 0.8,
-					width = 0.8,
-					x = 0.5,
-					y = 0.5,
-				},
-			})
-			vim.api.nvim_set_keymap("n", "<leader>e", "", {
-				noremap = true,
-				callback = function()
-					require("ranger-nvim").open(true)
-				end,
-			})
-		end,
+		"mikavilpas/yazi.nvim",
+		version = "*", -- use the latest stable version
+		event = "VeryLazy",
+		dependencies = {
+			{ "nvim-lua/plenary.nvim", lazy = true },
+		},
+		keys = {
+			{
+				"<leader>e",
+				mode = { "n", "v" },
+				"<cmd>Yazi<cr>",
+				desc = "Open yazi at the current file",
+			},
+			{
+				-- Open in the current working directory
+				"<leader>E",
+				"<cmd>Yazi cwd<cr>",
+				desc = "Open the file manager in nvim's working directory",
+			},
+		},
 	},
-
 	{
 		"folke/persistence.nvim",
 		event = "BufReadPre", -- this will only start session saving when an actual file was opened
