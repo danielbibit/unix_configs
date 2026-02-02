@@ -4,11 +4,11 @@ vim.g.loaded_netrwPlugin = 1
 
 -- No buffer when entering a directory
 vim.api.nvim_create_autocmd("BufEnter", {
-  callback = function()
-    if vim.fn.isdirectory(vim.fn.expand("%")) == 1 then
-      vim.cmd("bwipeout!")
-    end
-  end,
+	callback = function()
+		if vim.fn.isdirectory(vim.fn.expand("%")) == 1 then
+			vim.cmd("bwipeout!")
+		end
+	end,
 })
 
 local opt = vim.opt
@@ -34,13 +34,13 @@ opt.autoindent = true
 opt.smartindent = true
 
 opt.listchars = {
-  tab = "→ ",
-  eol = "↲",
-  nbsp = "␣",
-  trail = "•",
-  extends = "⟩",
-  precedes = "⟨",
-  space = "."
+	tab = "→ ",
+	eol = "↲",
+	nbsp = "␣",
+	trail = "•",
+	extends = "⟩",
+	precedes = "⟨",
+	space = ".",
 }
 opt.foldmethod = "indent"
 opt.foldenable = false
@@ -55,45 +55,44 @@ vim.o.guicursor = "n-v-c:block,i-ci-ve:ver25,r-cr-o:hor20"
 
 -- Revisit this if wezterm accepts reading from clipboard.
 vim.g.clipboard = {
-	name = 'OSC 52',
+	name = "OSC 52",
 	copy = {
-		['+'] = require('vim.ui.clipboard.osc52').copy('+'),
-		['*'] = require('vim.ui.clipboard.osc52').copy('*'),
+		["+"] = require("vim.ui.clipboard.osc52").copy("+"),
+		["*"] = require("vim.ui.clipboard.osc52").copy("*"),
 	},
 	-- Forces tmux to sync the clipboard to the OS clipboard to respond with the correct data
 	paste = {
-        ['+'] = function()
-            if vim.env.TMUX then
-                os.execute("tmux refresh-client -l")
-                vim.wait(5)
-            end
-            return require('vim.ui.clipboard.osc52').paste('+')()
-        end,
-        ['*'] = function()
-            if vim.env.TMUX then
-                os.execute("tmux refresh-client -l")
-                vim.wait(5)
-            end
-            return require('vim.ui.clipboard.osc52').paste('*')()
-        end,
-    },
+		["+"] = function()
+			if vim.env.TMUX then
+				os.execute("tmux refresh-client -l")
+				vim.wait(5)
+			end
+			return require("vim.ui.clipboard.osc52").paste("+")()
+		end,
+		["*"] = function()
+			if vim.env.TMUX then
+				os.execute("tmux refresh-client -l")
+				vim.wait(5)
+			end
+			return require("vim.ui.clipboard.osc52").paste("*")()
+		end,
+	},
 }
 
 -- Disable conceal for markdown files (indentline sets conceallevel)
 vim.api.nvim_create_autocmd("FileType", {
-  pattern = { "markdown" },
-  callback = function()
-    vim.opt_local.conceallevel = 0
-  end,
+	pattern = { "markdown" },
+	callback = function()
+		vim.opt_local.conceallevel = 0
+	end,
 })
 
 -- Remove trailing whitespace on save
 vim.api.nvim_create_autocmd("BufWritePre", {
-  pattern = "*",
-  callback = function()
-    local pos = vim.api.nvim_win_get_cursor(0)
-    vim.cmd([[%s/\s\+$//e]])
-    vim.api.nvim_win_set_cursor(0, pos)
-  end,
+	pattern = "*",
+	callback = function()
+		local pos = vim.api.nvim_win_get_cursor(0)
+		vim.cmd([[%s/\s\+$//e]])
+		vim.api.nvim_win_set_cursor(0, pos)
+	end,
 })
-

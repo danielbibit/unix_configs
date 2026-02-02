@@ -1,235 +1,248 @@
 return {
-  { "morhetz/gruvbox", lazy = false, priority = 1000, config = function()
-      vim.g.gruvbox_italic = 1
-      vim.g.gruvbox_invert_selection = 0
-    end
-  },
+	{
+		"nvim-treesitter/nvim-treesitter",
+		build = ":TSUpdate",
+		config = function()
+			local parsers = {
+				"lua",
+				"php",
+				"python",
+				"javascript",
+				"typescript",
+				"bash",
+				"markdown",
+				"json",
+				"yaml",
+				"html",
+				"css",
+				"vim",
+			}
+			require("nvim-treesitter").install(parsers)
+			vim.api.nvim_create_autocmd("FileType", {
+				callback = function()
+					pcall(vim.treesitter.start)
+				end,
+			})
+		end,
+	},
 
-  {
-    "nvim-treesitter/nvim-treesitter",
-    build = ":TSUpdate",
-    config = function()
-      local parsers = {
-        "lua",
-        "php",
-        "python",
-        "javascript",
-        "typescript",
-        "bash",
-        "markdown",
-        "json",
-        "yaml",
-        "html",
-        "css",
-        "vim"
-      }
-      require("nvim-treesitter").install(parsers)
-      vim.api.nvim_create_autocmd("FileType", {
-        callback = function()
-          pcall(vim.treesitter.start)
-        end,
-      })
-    end,
-  },
+	{ "airblade/vim-gitgutter" },
 
-  { "airblade/vim-gitgutter" },
+	{ "mg979/vim-visual-multi", branch = "master" },
 
-  { "mg979/vim-visual-multi", branch = "master" },
+	{
+		"nvim-lualine/lualine.nvim",
+		dependencies = { "nvim-tree/nvim-web-devicons" },
+		config = function()
+			require("lualine").setup({
+				options = {
+					theme = "onedark",
+				},
+				sections = {
+					lualine_c = {
+						{ "filename", path = 3 },
+					},
+				},
+			})
+		end,
+	},
 
-  {
-    'nvim-lualine/lualine.nvim',
-    dependencies = { 'nvim-tree/nvim-web-devicons' },
-    config = function()
-        require("lualine").setup {
-            options = {
-                theme = "onedark"
-            },
-            sections = {
-              lualine_c = {
-                { "filename", path = 3 }
-              }
-            }
-        }
-    end,
-  },
+	{ "yggdroot/indentline" },
 
-  { "yggdroot/indentline" },
+	{ "junegunn/fzf", build = "./install --all" },
 
-  { "junegunn/fzf", build = "./install --all" },
+	{ "ervandew/supertab" },
 
-  { "ervandew/supertab" },
+	{ "jiangmiao/auto-pairs" },
 
-  { "jiangmiao/auto-pairs" },
+	{
+		"folke/snacks.nvim",
+		opts = {
+			lazygit = {},
+			inputs = {},
+			animate = {},
+			indent = {},
+			dim = {},
+			buffdelete = {},
+		},
+	},
+	{
+		"folke/flash.nvim",
+		event = "VeryLazy",
+		---@type Flash.Config
+		opts = {},
+		keys = {
+			{
+				"s",
+				mode = { "n", "x", "o" },
+				function()
+					require("flash").jump()
+				end,
+				desc = "Flash",
+			},
+			{
+				"S",
+				mode = { "n", "x", "o" },
+				function()
+					require("flash").treesitter()
+				end,
+				desc = "Flash Treesitter",
+			},
+			{
+				"r",
+				mode = "o",
+				function()
+					require("flash").remote()
+				end,
+				desc = "Remote Flash",
+			},
+			{
+				"R",
+				mode = { "o", "x" },
+				function()
+					require("flash").treesitter_search()
+				end,
+				desc = "Treesitter Search",
+			},
+			{
+				"<c-s>",
+				mode = { "c" },
+				function()
+					require("flash").toggle()
+				end,
+				desc = "Toggle Flash Search",
+			},
+		},
+	},
+	{
+		"folke/noice.nvim",
+		opts = {
+			cmdline = {
+				enabled = true,
+				view = "cmdline_popup",
+			},
+		},
+	},
 
-  { "preservim/nerdcommenter" },
+	{
+		"folke/which-key.nvim",
+		event = "VeryLazy",
+		opts = {
+			preset = "helix",
+			delay = 100,
+			win = {
+				border = "rounded",
+			},
+		},
+	},
 
-  { "tpope/vim-surround" },
+	{ "preservim/nerdcommenter" },
 
-  {
-    "navarasu/onedark.nvim",
-    priority = 1000,
-    config = function()
-      require("onedark").setup({
-        style = "dark", -- or darker 'dark', 'cool', 'deep', 'warm', 'warmer'
-        transparent = true,
-      })
-      require("onedark").load()
-    end
-  },
+	{ "tpope/vim-surround" },
 
-  {
-    "nvim-telescope/telescope.nvim",
-    dependencies = { "nvim-lua/plenary.nvim" },
-    config = function()
-      require("telescope").setup({
-        defaults = {
-          hidden = true,
-          file_ignore_patterns = { "%.git/" },
-          mappings = {
-              ['i'] = {
-                  ["<CR>"] = utils.plugins.telescope_open_single_or_multi
-              }
-          }
-        },
-        pickers = {
-          find_files = {
-            hidden = true,
-          },
-          live_grep = {
-            additional_args = { "--hidden" },
-          },
-        },
-      })
+	{
+		"navarasu/onedark.nvim",
+		priority = 1000,
+		config = function()
+			require("onedark").setup({
+				style = "dark", -- or darker 'dark', 'cool', 'deep', 'warm', 'warmer'
+				transparent = true,
+			})
+			require("onedark").load()
+		end,
+	},
 
-      -- Open all modified and untracked git files in buffers
-      vim.api.nvim_create_user_command("GitOpenModified", function()
-        local files = {}
-        local seen = {}
+	{
+		"nvim-telescope/telescope.nvim",
+		dependencies = { "nvim-lua/plenary.nvim" },
+		config = function()
+			require("telescope").setup({
+				defaults = {
+					hidden = true,
+					file_ignore_patterns = { "%.git/" },
+					mappings = {
+						["i"] = {
+							["<CR>"] = utils.plugins.telescope_open_single_or_multi,
+						},
+					},
+				},
+				pickers = {
+					find_files = {
+						hidden = true,
+					},
+					live_grep = {
+						additional_args = { "--hidden" },
+					},
+				},
+			})
+		end,
 
-        -- Get modified files
-        local handle = io.popen("git diff --name-only 2>/dev/null")
-        if handle then
-          local result = handle:read("*a")
-          handle:close()
-          for file in result:gmatch("[^\r\n]+") do
-            if vim.fn.filereadable(file) == 1 and not seen[file] then
-              table.insert(files, file)
-              seen[file] = true
-            end
-          end
-        end
+		keys = {
+			{ "<leader>ff", "<cmd>Telescope find_files<cr>", desc = "Find files" },
+			{ "<leader>fg", "<cmd>Telescope live_grep<cr>", desc = "Live grep" },
+			{ "<leader>fb", "<cmd>Telescope buffers<cr>", desc = "Buffers" },
+			{ "<leader>fh", "<cmd>Telescope help_tags<cr>", desc = "Help tags" },
+			{ "<leader>fs", "<cmd>Telescope git_status<cr>", desc = "Git status" },
+		},
+	},
 
-        -- Get untracked files
-        handle = io.popen("git ls-files --others --exclude-standard 2>/dev/null")
-        if handle then
-          local result = handle:read("*a")
-          handle:close()
-          for file in result:gmatch("[^\r\n]+") do
-            if vim.fn.filereadable(file) == 1 and not seen[file] then
-              table.insert(files, file)
-              seen[file] = true
-            end
-          end
-        end
+	{
+		"OXY2DEV/markview.nvim",
+		lazy = false,
+	},
 
-        if #files == 0 then
-          vim.notify("No modified or untracked git files found", vim.log.levels.INFO)
-          return
-        end
+	{
+		"kelly-lin/ranger.nvim",
+		config = function()
+			require("ranger-nvim").setup({
+				replace_netrw = false,
+				ui = {
+					border = "rounded",
+					height = 0.8,
+					width = 0.8,
+					x = 0.5,
+					y = 0.5,
+				},
+			})
+			vim.api.nvim_set_keymap("n", "<leader>e", "", {
+				noremap = true,
+				callback = function()
+					require("ranger-nvim").open(true)
+				end,
+			})
+		end,
+	},
 
-        for _, file in ipairs(files) do
-          vim.cmd("edit " .. vim.fn.fnameescape(file))
-        end
-        vim.notify("Opened " .. #files .. " modified/untracked file(s)", vim.log.levels.INFO)
-      end, {})
-    end,
+	{
+		"folke/persistence.nvim",
+		event = "BufReadPre", -- this will only start session saving when an actual file was opened
+		opts = {
+			-- add any custom options here
+		},
+	},
 
-    keys = {
-      { "<leader>ff", "<cmd>Telescope find_files<cr>", desc = "Find files" },
-      { "<leader>fg", "<cmd>Telescope live_grep<cr>", desc = "Live grep" },
-      { "<leader>fb", "<cmd>Telescope buffers<cr>", desc = "Buffers" },
-      { "<leader>fh", "<cmd>Telescope help_tags<cr>", desc = "Help tags" },
-
-      { "<leader>fs", "<cmd>Telescope git_status<cr>", desc = "Git status" },
-
-      { "<leader>fm", "<cmd>GitOpenModified<cr>", desc = "Open all modified/untracked git files" },
-    },
-  },
-
-  {
-    "kdheepak/lazygit.nvim",
-    lazy = true,
-    cmd = {
-      "LazyGit",
-      "LazyGitConfig",
-      "LazyGitCurrentFile",
-      "LazyGitFilter",
-      "LazyGitFilterCurrentFile",
-    },
-    dependencies = {
-        "nvim-lua/plenary.nvim",
-    },
-    keys = {
-        { "<leader>gg", "<cmd>LazyGit<cr>", desc = "LazyGit" }
-    }
-  },
-
-  {
-    "OXY2DEV/markview.nvim",
-    lazy = false,
-  },
-
-  {
-    "kelly-lin/ranger.nvim",
-    config = function()
-      require("ranger-nvim").setup({
-          replace_netrw = false,
-          ui = {
-            border = "rounded",
-            height = 0.8,
-            width = 0.8,
-            x = 0.5,
-            y = 0.5
-          }
-      })
-      vim.api.nvim_set_keymap("n", "<leader>e", "", {
-        noremap = true,
-        callback = function()
-          require("ranger-nvim").open(true)
-        end,
-      })
-    end,
-  },
-
-  {
-    "folke/persistence.nvim",
-    event = "BufReadPre", -- this will only start session saving when an actual file was opened
-    opts = {
-      -- add any custom options here
-    }
-  },
-  {
-    'akinsho/bufferline.nvim',
-    version = "*",
-    dependencies = 'nvim-tree/nvim-web-devicons',
-    config = function()
-      require("bufferline").setup({
-        options = {
-          mode = "buffers", -- or "tabs"
-          separator_style = "slant", -- options: "slant" | "slope" | "thick" | "thin"
-          always_show_bufferline = true,
-          show_buffer_close_icons = true,
-          show_close_icon = true,
-          color_icons = true,
-        }
-      })
-    end
-  },
-  {
-      "tpope/vim-fugitive",
-      config = function()
-        -- Set a shortcut for the main Git status window
-        vim.keymap.set("n", "<leader>gd", vim.cmd.Gdiffsplit)
-      end
-  }
+	{
+		"akinsho/bufferline.nvim",
+		version = "*",
+		dependencies = "nvim-tree/nvim-web-devicons",
+		config = function()
+			require("bufferline").setup({
+				options = {
+					mode = "buffers", -- or "tabs"
+					separator_style = "slant", -- options: "slant" | "slope" | "thick" | "thin"
+					always_show_bufferline = true,
+					show_buffer_close_icons = true,
+					show_close_icon = true,
+					color_icons = true,
+				},
+			})
+		end,
+	},
+	{
+		"tpope/vim-fugitive",
+		config = function()
+			-- Set a shortcut for the main Git status window
+			vim.keymap.set("n", "<leader>gd", vim.cmd.Gdiffsplit)
+		end,
+	},
 }
