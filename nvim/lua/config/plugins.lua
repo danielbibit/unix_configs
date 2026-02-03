@@ -60,10 +60,19 @@ return {
 		opts = {
 			lazygit = {},
 			inputs = {},
-			animate = {},
-			indent = {},
+			indent = {
+				animate = {
+					enabled = true,
+					style = "out",
+					duration = {
+						step = 50,
+						total = 750,
+					},
+				},
+			},
 			dim = {},
 			buffdelete = {},
+			dashboard = {},
 		},
 	},
 	{
@@ -191,27 +200,6 @@ return {
 		lazy = false,
 	},
 
-	--{
-		--"kelly-lin/ranger.nvim",
-		--config = function()
-			--require("ranger-nvim").setup({
-				--replace_netrw = false,
-				--ui = {
-					--border = "rounded",
-					--height = 0.8,
-					--width = 0.8,
-					--x = 0.5,
-					--y = 0.5,
-				--},
-			--})
-			--vim.api.nvim_set_keymap("n", "<leader>e", "", {
-				--noremap = true,
-				--callback = function()
-					--require("ranger-nvim").open(true)
-				--end,
-			--})
-		--end,
-	--},
 	{
 		"mikavilpas/yazi.nvim",
 		version = "*", -- use the latest stable version
@@ -265,5 +253,27 @@ return {
 			-- Set a shortcut for the main Git status window
 			vim.keymap.set("n", "<leader>gd", vim.cmd.Gdiffsplit)
 		end,
+	},
+	{
+		"MagicDuck/grug-far.nvim",
+		opts = { headerMaxWidth = 80 },
+		cmd = { "GrugFar", "GrugFarWithin" },
+		keys = {
+			{
+				"<leader>sr",
+				function()
+					local grug = require("grug-far")
+					local ext = vim.bo.buftype == "" and vim.fn.expand("%:e")
+					grug.open({
+						transient = true,
+						prefills = {
+							filesFilter = ext and ext ~= "" and "*." .. ext or nil,
+						},
+					})
+				end,
+				mode = { "n", "x" },
+				desc = "Search and Replace",
+			},
+		},
 	},
 }

@@ -11,6 +11,16 @@ vim.api.nvim_create_autocmd("BufEnter", {
 	end,
 })
 
+vim.api.nvim_create_autocmd("VimEnter", {
+	callback = function()
+		local stats = vim.loop.fs_stat(vim.fn.argv(0))
+		if stats and stats.type == "directory" then
+			vim.cmd("cd " .. vim.fn.argv(0))
+			require("snacks").dashboard()
+		end
+	end,
+})
+
 local opt = vim.opt
 opt.encoding = "utf-8"
 opt.signcolumn = "yes"
@@ -24,7 +34,6 @@ opt.smartcase = true
 opt.hidden = true
 opt.confirm = true
 opt.autoread = true
-opt.ruler = true
 opt.tabstop = 4
 opt.shiftwidth = 4
 opt.softtabstop = 4
