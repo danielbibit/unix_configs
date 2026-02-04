@@ -44,11 +44,11 @@ map("n", "<S-H>", ":bprevious<CR>", opts)
 map("n", "<leader>bn", ":bnext<CR>", { silent = true, desc = "Next buffer" })
 map("n", "<leader>bp", ":bprevious<CR>", { silent = true, desc = "Previous buffer" })
 
-map("n", "<leader>bd", function()
+map("n", "<leader>bD", function()
 	Snacks.bufdelete()
 end, { desc = "Delete Buffer" })
 
-map("n", "<leader>bD", "<cmd>:bd<cr>", { desc = "Delete Buffer and Window" })
+map("n", "<leader>bd", "<cmd>:bd<cr>", { desc = "Delete Buffer and Window" })
 
 map("n", "<leader>bo", function()
 	Snacks.bufdelete.other()
@@ -58,3 +58,12 @@ map("n", "<leader>gm", "<cmd>GitOpenModified<cr>", { desc = "Open all modified o
 map("n", "<leader>gg", function()
 	Snacks.lazygit()
 end, { desc = "Lazygit (cwd)" })
+
+map("n", "<leader>gb", function()
+  Snacks.git.blame_line()
+end, { desc = "Git Blame Line" })
+
+map("n", "<leader>.",  function()
+   Snacks.scratch()
+end, { desc = "Toggle Scratch Buffer" })
+
