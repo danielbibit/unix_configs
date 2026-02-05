@@ -13,16 +13,17 @@ map("n", "<C-s>", ":w<CR>", opts)
 map("i", "<C-s>", "<Esc>:w<CR>a", opts)
 map("v", "<C-s>", "<Esc>:w<CR>gv", opts)
 
-map("n", "<C-d>", "<C-d>zz", opts)
-map("n", "<C-u>", "<C-u>zz", opts)
-map("n", "<C-p>", ":FZF<CR>", opts)
+--map("n", "<C-d>", "<C-d>zz", opts)
+--map("n", "<C-u>", "<C-u>zz", opts)
+map("n", "<C-d>", "15jzz", opts)
+map("n", "<C-u>", "15kzz", opts)
 map("n", "<C-o>", "o<ESC>", opts)
 
 -- Map both <C-/> and <C-_> for cross-platform compatibility (macOS sends <C-/>)
-map("n", "<C-/>", "<cmd>call nerdcommenter#Comment('n', 'Toggle')<CR>", opts)
-map("v", "<C-/>", ":call nerdcommenter#Comment('x', 'Toggle')<CR>gv", opts)
-map("n", "<C-_>", "<cmd>call nerdcommenter#Comment('n', 'Toggle')<CR>", opts)
-map("v", "<C-_>", ":call nerdcommenter#Comment('x', 'Toggle')<CR>gv", opts)
+map("n", "<C-/>", "gcc", { remap = true, silent = true, desc = "Comment" })
+map("v", "<C-/>", "gc", { remap = true, silent = true, desc = "Comment" })
+map("n", "<C-_>", "gcc", { remap = true, silent = true, desc = "Comment" })
+map("v", "<C-_>", "gc", { remap = true, silent = true, desc = "Comment" })
 
 map("n", "<leader>a", "ggVG", opts)
 
@@ -45,25 +46,26 @@ map("n", "<leader>bn", ":bnext<CR>", { silent = true, desc = "Next buffer" })
 map("n", "<leader>bp", ":bprevious<CR>", { silent = true, desc = "Previous buffer" })
 
 map("n", "<leader>bD", function()
-	Snacks.bufdelete()
+    Snacks.bufdelete()
 end, { desc = "Delete Buffer" })
 
 map("n", "<leader>bd", "<cmd>:bd<cr>", { desc = "Delete Buffer and Window" })
 
 map("n", "<leader>bo", function()
-	Snacks.bufdelete.other()
+    Snacks.bufdelete.other()
 end, { desc = "Delete Other Buffers" })
 
 map("n", "<leader>gm", "<cmd>GitOpenModified<cr>", { desc = "Open all modified on git" })
 map("n", "<leader>gg", function()
-	Snacks.lazygit()
+    Snacks.lazygit()
 end, { desc = "Lazygit (cwd)" })
 
 map("n", "<leader>gb", function()
-  Snacks.git.blame_line()
+    Snacks.git.blame_line()
 end, { desc = "Git Blame Line" })
 
-map("n", "<leader>.",  function()
-   Snacks.scratch()
-end, { desc = "Toggle Scratch Buffer" })
+map("n", "<leader>gh", ":GitGutterLineHighlightsToggle<CR>", { desc = "Toggle GitGutter line highlights" })
 
+map("n", "<leader>.", function()
+    Snacks.scratch()
+end, { desc = "Toggle Scratch Buffer" })
