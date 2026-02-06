@@ -2,25 +2,6 @@
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
--- No buffer when entering a directory
-vim.api.nvim_create_autocmd("BufEnter", {
-    callback = function()
-        if vim.fn.isdirectory(vim.fn.expand("%")) == 1 then
-            vim.cmd("bwipeout!")
-        end
-    end,
-})
-
-vim.api.nvim_create_autocmd("VimEnter", {
-    callback = function()
-        local stats = vim.loop.fs_stat(vim.fn.argv(0))
-        if stats and stats.type == "directory" then
-            vim.cmd("cd " .. vim.fn.argv(0))
-            require("snacks").dashboard()
-        end
-    end,
-})
-
 local opt = vim.opt
 opt.encoding = "utf-8"
 opt.signcolumn = "yes"
@@ -87,21 +68,3 @@ vim.g.clipboard = {
         end,
     },
 }
-
--- Disable conceal for markdown files (indentline sets conceallevel)
-vim.api.nvim_create_autocmd("FileType", {
-    pattern = { "markdown" },
-    callback = function()
-        vim.opt_local.conceallevel = 0
-    end,
-})
-
--- Remove trailing whitespace on save
-vim.api.nvim_create_autocmd("BufWritePre", {
-    pattern = "*",
-    callback = function()
-        local pos = vim.api.nvim_win_get_cursor(0)
-        vim.cmd([[%s/\s\+$//e]])
-        vim.api.nvim_win_set_cursor(0, pos)
-    end,
-})

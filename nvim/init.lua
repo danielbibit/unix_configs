@@ -5,7 +5,7 @@ vim.g.maplocalleader = " "
 require("config.options")
 require("config.keymaps")
 require("config.utils")
--- require("config.autocmds")
+require("config.commands")
 
 -- Lazy.nvim bootstrap
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
