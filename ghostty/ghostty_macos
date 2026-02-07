@@ -13,6 +13,13 @@ mouse-scroll-multiplier = 0.4
 
 background-opacity = 0.95
 
+macos-titlebar-style = "hidden"
+
 # ghostty +list-themes
 # theme = Atom One Dark
 # theme = Material Design Colors
+
+
+# ghostty +list-keybinds
+keybind = super+t=unbind
+keybind = super+n=unbind

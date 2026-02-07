@@ -14,10 +14,13 @@ mouse-scroll-multiplier = 1
 background-opacity = 0.94
 
 gtk-titlebar = false
+
 # ghostty +list-themes
 # theme = Atom One Dark
 # theme = Material Design Colors
 
+
+# ghostty +list-keybinds
 keybind = clear
 
 keybind = ctrl+shift+c=copy_to_clipboard
