@@ -13,10 +13,34 @@ map("n", "<C-s>", ":w<CR>", opts)
 map("i", "<C-s>", "<Esc>:w<CR>a", opts)
 map("v", "<C-s>", "<Esc>:w<CR>gv", opts)
 
---map("n", "<C-d>", "<C-d>zz", opts)
---map("n", "<C-u>", "<C-u>zz", opts)
-map("n", "<C-d>", "15jzz", opts)
-map("n", "<C-u>", "15kzz", opts)
+local function smart_scroll(key)
+    return function()
+        local curr_line = vim.fn.line(".")
+        local last_line = vim.fn.line("$")
+
+        local k = vim.api.nvim_replace_termcodes(key, true, false, true)
+
+        vim.api.nvim_feedkeys(k, "n", false)
+
+        local new_line = vim.fn.line(".")
+
+        if curr_line == 1 then
+            vim.cmd("normal! " .. math.min(30, last_line - 1) .. "j")
+        end
+
+        if new_line == last_line or last_line - new_line < 30 then
+            vim.cmd("normal! zz")
+        end
+    end
+end
+
+vim.keymap.set("n", "<C-d>", smart_scroll("<C-d>"), { desc = "Scroll down and center at bottom" })
+vim.keymap.set("n", "<C-u>", smart_scroll("<C-u>"), { desc = "Scroll up and center at top" })
+
+-- map("n", "<C-d>", "<C-d>zz", opts)
+-- map("n", "<C-u>", "<C-u>zz", opts)
+-- map("n", "<C-d>", "15jzz", opts)
+-- map("n", "<C-u>", "15kzz", opts)
 map("n", "<C-o>", "o<ESC>", opts)
 
 -- Map both <C-/> and <C-_> for cross-platform compatibility (macOS sends <C-/>)
@@ -34,8 +58,8 @@ map("v", "<leader>Y", '"+Y', opts)
 
 map("n", "<leader>p", '"+p', opts)
 map("v", "<leader>p", '"+p', opts)
-map("n", "<leader>p", '"+P', opts)
-map("v", "<leader>p", '"+P', opts)
+map("n", "<leader>P", '"+P', opts)
+map("v", "<leader>P", '"+P', opts)
 
 map("n", "<C-Tab>", ":bnext<CR>", opts)
 map("n", "<C-S-Tab>", ":bprevious<CR>", opts)

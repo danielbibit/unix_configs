@@ -25,11 +25,13 @@ return {
             })
         end,
     },
-
-    { "airblade/vim-gitgutter" },
-
-    { "mg979/vim-visual-multi", branch = "master" },
-
+    {
+        "airblade/vim-gitgutter",
+    },
+    {
+        "mg979/vim-visual-multi",
+        branch = "master",
+    },
     {
         "nvim-lualine/lualine.nvim",
         dependencies = { "nvim-tree/nvim-web-devicons" },
@@ -46,9 +48,9 @@ return {
             })
         end,
     },
-
-    { "ervandew/supertab" },
-
+    {
+        "ervandew/supertab",
+    },
     {
         "folke/snacks.nvim",
         opts = {
@@ -56,12 +58,15 @@ return {
             inputs = {},
             indent = {
                 animate = {
-                    enabled = true,
+                    enabled = false,
                     style = "out",
                     duration = {
                         step = 50,
                         total = 750,
                     },
+                },
+                scope = {
+                    hl = {},
                 },
             },
             dim = {},
@@ -69,6 +74,14 @@ return {
             dashboard = {},
             git = {},
             statuscolumn = {},
+            scroll = {
+                animate = {
+                    duration = {
+                        step = 5,
+                        total = 80,
+                    },
+                },
+            },
         },
     },
     {
@@ -126,9 +139,38 @@ return {
                 enabled = true,
                 view = "cmdline_popup",
             },
+            views = {
+                mini = {
+                    align = "message-left", -- Align messages to the left
+                    position = {
+                        col = 0, -- Align to the leftmost column
+                    },
+                },
+            },
+            routes = {
+                {
+                    filter = {
+                        event = "msg_show",
+                        any = {
+                            { find = "%d+L, %d+B" },
+                            { find = "; after #%d+" },
+                            { find = "; before #%d+" },
+                        },
+                    },
+                    view = "mini",
+                },
+                {
+                    filter = { event = "msg_showmode" },
+                    view = "mini",
+                },
+            },
+            presets = {
+                bottom_search = true,
+                command_palette = true,
+                long_message_to_split = true,
+            },
         },
     },
-
     {
         "folke/which-key.nvim",
         event = "VeryLazy",
@@ -138,17 +180,29 @@ return {
             win = {
                 border = "rounded",
             },
+            spec = {
+                {
+                    { "<leader>s", group = "surround" },
+                    { "<leader>g", group = "git" },
+                    { "<leader>b", group = "buffers" },
+                    { "<leader>f", group = "find" },
+                },
+            },
         },
     },
-
     {
         "nvim-mini/mini.nvim",
         config = function()
             require("mini.pairs").setup()
-            require("mini.surround").setup()
+            require("mini.surround").setup({
+                mappings = {
+                    replace = "<leader>sc",
+                    delete = "<leader>sd",
+                    add = "<leader>sa",
+                },
+            })
         end,
     },
-
     {
         "navarasu/onedark.nvim",
         priority = 1000,
@@ -160,7 +214,6 @@ return {
             require("onedark").load()
         end,
     },
-
     {
         "nvim-telescope/telescope.nvim",
         dependencies = { "nvim-lua/plenary.nvim" },
@@ -194,12 +247,10 @@ return {
             { "<leader>fs", "<cmd>Telescope git_status<cr>", desc = "Git status" },
         },
     },
-
     {
         "OXY2DEV/markview.nvim",
         lazy = false,
     },
-
     {
         "mikavilpas/yazi.nvim",
         version = "*", -- use the latest stable version
@@ -222,13 +273,11 @@ return {
             },
         },
     },
-
     {
         "folke/persistence.nvim",
         event = "BufReadPre", -- this will only start session saving when an actual file was opened
         opts = {},
     },
-
     {
         "akinsho/bufferline.nvim",
         version = "*",
@@ -246,13 +295,13 @@ return {
             })
         end,
     },
-    -- {
-    --     "tpope/vim-fugitive",
-    --     config = function()
-    --         -- Set a shortcut for the main Git status window
-    --         vim.keymap.set("n", "<leader>gd", vim.cmd.Gdiffsplit)
-    --     end,
-    -- },
+    {
+        "tpope/vim-fugitive",
+        config = function()
+            -- Set a shortcut for the main Git status window
+            vim.keymap.set("n", "<leader>gD", vim.cmd.Gdiffsplit)
+        end,
+    },
     {
         "sindrets/diffview.nvim",
         config = function()
@@ -265,7 +314,7 @@ return {
         cmd = { "GrugFar", "GrugFarWithin" },
         keys = {
             {
-                "<leader>sr",
+                "<leader>fr",
                 function()
                     local grug = require("grug-far")
                     local ext = vim.bo.buftype == "" and vim.fn.expand("%:e")
