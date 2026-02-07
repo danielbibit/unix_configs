@@ -1,0 +1,14 @@
+#!/bin/bash
+
+options=(
+	style=round
+	width=9
+    # argb, keep 0xff for solid color
+    # Default grey
+    # active_color=0xffe2e2e3
+
+    # Light blue
+    active_color=0xff61bafe
+)
+
+borders "${options[@]}"
