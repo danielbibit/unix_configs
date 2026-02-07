@@ -6,26 +6,45 @@ killall Dock
 # Remove hold key to show symbol
 defaults write -g ApplePressAndHoldEnabled -bool false
 
+# Stop wrinting .DS_Store files on smb shares
+defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool TRUE
+
+# Essentials
 brew install git
-brew install mac-mouse-fix
 brew install neovim
+brew install tree-sitter-cli
+brew install gnu-tar # For ansible
+brew install ffmpeg
+brew install fzf
+
+# Development/cli tools
 brew install lazygit
-brew install ranger
 brew install tmux
 brew install orbstack
-brew install tree-sitter-cli
+brew install yazi
+brew install eza
+brew install zoxide
+brew install bat
+
+brew install --cask keepassxc
 
 brew install --cask karabiner-elements
 brew install --cask betterdisplay
-brew install --cask keepassxc
 brew install --cask alt-tab
-brew install --cask rectangle
+brew install --cask rectangle-pro
+brew install --cask linearmouse
+
+# Add borders to focused window
+brew tap FelixKratz/formulae
+brew install borders
+brew services start borders
+mkdir -p $HOME/.config/borders
+ln -sf $PWD/bordersrc $HOME/.config/borders/
 
 ln -sf $PWD/.zshrc $HOME/.zshrc
 
 ln -sf $PWD/.wezterm.lua $HOME/.wezterm.lua
 ln -sf $PWD/tmux.conf $HOME/.tmux.conf
-ln -sf $PWD/ranger/rc.conf $HOME/.config/ranger/rc.conf
 ln -sf $PWD/nvim $HOME/.config/
 
 mkdir -p $HOME/.config/lazygit
@@ -37,9 +56,5 @@ ln -sf $PWD/vim/vimrc $HOME/.vimrc
 
 mkdir -p $HOME/.config/ghostty
 ln -sf $PWD/ghostty/ghostty_macos $HOME/.config/ghostty/config
-
-#Gnu tar for ansible
-brew install gnu-tar
-export PATH="/usr/local/opt/gnu-tar/libexec/gnubin:$PATH"
 
 echo 'Done!'

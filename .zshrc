@@ -1,23 +1,34 @@
-## RUN SSH ADD
+# If not running interactively, don't do anything (keep at the top)
+[[ $- != *i* ]] && return
+
 ssh-add 2> /dev/null
 
-# Default Editor VIM
-export VISUAL=vim
+export VISUAL=nvim
 export EDITOR="$VISUAL"
 
 # Fix lazygit not loading config from ~/.config
 export XDG_CONFIG_HOME="$HOME/.config"
 
-# If not running interactively, don't do anything
-[[ $- != *i* ]] && return
+export PATH="/usr/local/opt/gnu-tar/libexec/gnubin:$PATH"
 
+# Load extensions if they exist
+if [ -f "$HOME/zsh_extension.sh" ]; then
+    source "$HOME/zsh_extension.sh"
+fi
+
+# FZF ^R search (using the zsh version)
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# Launch main terminals with tmux.
 if [[ -z "$TMUX" ]]; then
   case "$TERM_PROGRAM" in
     WezTerm)
-      tmux new-session -A -s WezDefault && exit
+      # Always a new session for wezterm. Use exec to exit on dettach
+      exec tmux new-session -s "temp-$(date +%s)"\; set-option destroy-unattached on
       ;;
     ghostty)
-      tmux new-session -A -s GhosttyDefault && exit
+      # One instance of ghostty
+      exec tmux new-session -A -s GhosttyDefault
       ;;
   esac
 fi
@@ -41,6 +52,7 @@ setopt SHARE_HISTORY         # Share history between all open terminal windows
 # make less more friendly for non-text input files
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
+# Helper function to extract files
 ex () {
     if [ -f "$1" ] ; then
         case $1 in
@@ -62,36 +74,58 @@ ex () {
     fi
 }
 
-setopt PROMPT_SUBST # Required to run functions inside the prompt
+# Write .iso files toa  flashdrive
+iso2sd() {
+  if [ $# -ne 2 ]; then
+    echo "Usage: iso2sd <input_file> <output_device>"
+    echo "Example: iso2sd ~/Downloads/ubuntu-25.04-desktop-amd64.iso /dev/sda"
+    echo -e "\nAvailable SD cards:"
+    lsblk -d -o NAME | grep -E '^sd[a-z]' | awk '{print "/dev/"$1}'
+  else
+    sudo dd bs=4M status=progress oflag=sync if="$1" of="$2"
+    sudo eject $2
+  fi
+}
+
+# Create a filename.ext.bkp copy on the same directory
+mkbkp() {
+  if [[ -e "$1" ]]; then
+    cp -r "$1" "$1.bkp"
+    echo "Copied '$1' to '$1.bkp'"
+  else
+    echo "Error: '$1' not found."
+  fi
+}
+
+# Rename the file to [filename].deleteme
+deleteme() {
+  if [[ -e "$1" ]]; then
+    mv "$1" "$1.deleteme"
+    echo "Renamed '$1' to '$1.deleteme'"
+  else
+    echo "Error: '$1' not found."
+  fi
+}
 
 function parse_git_dirty() {
-    local g_out=$(git status 2>&1)
-    local bits=''
-
-    [[ "$g_out" =~ "renamed:" ]] && bits=">$bits"
-    [[ "$g_out" =~ "ahead of" ]] && bits="*$bits"
-    [[ "$g_out" =~ "new file:" ]] && bits="+$bits"
-    [[ "$g_out" =~ "Untracked files" ]] && bits="?$bits"
-    [[ "$g_out" =~ "deleted:" ]] && bits="x$bits"
-    [[ "$g_out" =~ "modified:" ]] && bits="!$bits"
-
-    if [[ -n $bits ]]; then
-        echo " $bits"
-    else
-        echo ""
-    fi
+  command git diff --quiet --ignore-submodules HEAD 2>/dev/null || echo " !"
 }
 
 function parse_git_branch() {
-    local branch=$(git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/')
-    if [[ -n $branch ]]; then
-        # Append the symbols directly to the branch name
-        echo "(${branch}$(parse_git_dirty))"
-    fi
+  local branch=$(git symbolic-ref --short HEAD 2>/dev/null)
+  if [[ -n $branch ]]; then
+    echo "($branch$(parse_git_dirty)) "
+  fi
 }
+
+setopt PROMPT_SUBST # Required to run functions inside the prompt
+
 # %F{15} = White, %F{10} = Green, %F{33} = Blue, %F{226} = Yellow
-PROMPT='%F{15}[%F{10}%n%F{15}@%F{10}%m%F{15}]%F{15}{%F{33}%~%F{15}}
-%F{226}$(parse_git_branch)$ %f'
+PROMPT='%F{15}%F{10}%n%F{15}@%F{10}%m%F{15}%F{15} %F{33}%~%F{15}
+%F{226}$(parse_git_branch)%# %f'
+
+# Minimal prompt
+#PS1='%F{blue}%~ %(?.%F{green}.%F{red})%#%f '
 
 # Set terminal title
 case "$TERM" in
@@ -99,13 +133,6 @@ case "$TERM" in
         precmd() { print -Pn "\e]0;${debian_chroot:+($debian_chroot)}%n@%m: %~\a" }
         ;;
 esac
-
-# enable color support of ls and also add handy aliases
-if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-    alias ls='ls --color=auto --classify'
-elif [[ "$OSTYPE" == "darwin"* ]]; then
-    alias ls='ls -G -F' # macOS version of colored ls
-fi
 
 
 alias grep='grep --color=auto'
@@ -125,13 +152,51 @@ alias ...='cd ../..'
 alias ....='cd ../../..'
 alias uvr='uv run'
 
-# FZF (using the zsh version)
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+# better ls
+if command -v eza &> /dev/null; then
+  alias ls='eza -lg --group-directories-first --classify --icons=auto'
+  alias ogls='command ls'
 
-# Load extensions if they exist
-if [ -f "$HOME/zsh_extension.sh" ]; then
-    source "$HOME/zsh_extension.sh"
+  alias lsa='ls -a'
+  alias lt='eza --tree --level=2 --long --icons --git'
+  alias lta='lt -a'
 fi
+
+# better cat
+if command -v bat &> /dev/null; then
+    alias cat='bat --paging=never'
+    alias ogcat='command cat'
+fi
+
+# better cd
+if command -v zoxide &> /dev/null; then
+  eval "$(zoxide init zsh)"
+  alias cd="zd"
+  alias ogcd="command cd"
+
+  zd() {
+    if [ $# -eq 0 ]; then
+      builtin cd ~ && return
+    elif [ -d "$1" ]; then
+      builtin cd "$1"
+    else
+      z "$@" && printf "\U000F17A9 " && pwd || echo "Error: Directory not found"
+    fi
+  }
+fi
+
+# cd into the current directory when exiting yazi
+function yz() {
+	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+	command yazi "$@" --cwd-file="$tmp"
+	IFS= read -r -d '' cwd < "$tmp"
+	[ "$cwd" != "$PWD" ] && [ -d "$cwd" ] && builtin cd -- "$cwd"
+	rm -f -- "$tmp"
+}
+
+function mkcd() {
+  mkdir -p "$1" && cd "$1"
+}
 
 # load uv binary
 [ -f "$HOME/.local/bin/env" ] && . "$HOME/.local/bin/env"
