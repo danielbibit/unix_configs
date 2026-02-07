@@ -22,6 +22,9 @@ brew install lazygit
 brew install tmux
 brew install orbstack
 brew install yazi
+brew install eza
+brew install zoxide
+brew install bat
 
 brew install --cask keepassxc
 
