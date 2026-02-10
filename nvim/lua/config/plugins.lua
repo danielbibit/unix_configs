@@ -58,12 +58,16 @@ return {
             inputs = {},
             indent = {
                 animate = {
-                    enabled = false,
+                    enabled = true,
                     style = "out",
                     duration = {
                         step = 50,
                         total = 750,
                     },
+                },
+                indent = {
+                    -- char = "┊",
+                    char = "┆",
                 },
                 scope = {
                     hl = {},
@@ -78,7 +82,7 @@ return {
                 animate = {
                     duration = {
                         step = 5,
-                        total = 80,
+                        total = 100,
                     },
                 },
             },
@@ -176,7 +180,7 @@ return {
         event = "VeryLazy",
         opts = {
             preset = "helix",
-            delay = 100,
+            delay = 500,
             win = {
                 border = "rounded",
             },
