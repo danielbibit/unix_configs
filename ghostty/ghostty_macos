@@ -1,6 +1,6 @@
 confirm-close-surface = false
 
-font-size = 14
+font-size = 13
 
 clipboard-write = allow
 clipboard-read = allow
@@ -17,6 +17,8 @@ macos-titlebar-style = "hidden"
 
 # ghostty +list-themes
 # theme = Atom One Dark
+# theme = One Double Dark
+theme = One Half Dark
 # theme = Material Design Colors
 
 
