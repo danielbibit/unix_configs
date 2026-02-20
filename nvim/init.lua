@@ -18,3 +18,6 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup("config.plugins")
+
+local ansible = require("languages.ansible")
+ansible.setup()
