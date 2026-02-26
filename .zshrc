@@ -154,7 +154,7 @@ alias uvr='uv run'
 
 # better ls
 if command -v eza &> /dev/null; then
-  alias ls='eza -lg --group-directories-first --classify --icons=auto'
+  alias ls='eza -lg --group-directories-first --classify --icons=auto --color=auto'
   alias ogls='command ls'
 
   alias lsa='ls -a'
@@ -164,7 +164,7 @@ fi
 
 # better cat
 if command -v bat &> /dev/null; then
-    alias cat='bat --paging=never'
+    alias cat='bat --plain --paging=never --theme=base16-256'
     alias ogcat='command cat'
 fi
 

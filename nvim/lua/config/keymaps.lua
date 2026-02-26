@@ -6,24 +6,50 @@ map("n", "q:", "<nop>", opts)
 map("n", "q/", "<nop>", opts)
 map("n", "q?", "<nop>", opts)
 
+--map("n", "<Esc>", "<cmd>noh<CR><Esc>", { silent = true })
+map("n", "<leader><Esc>", "<cmd>noh<CR>", { silent = true, desc = "Clear search highlight" })
+
 map("n", "<C-s>", ":w<CR>", opts)
 map("i", "<C-s>", "<Esc>:w<CR>a", opts)
 map("v", "<C-s>", "<Esc>:w<CR>gv", opts)
 
-map("n", "<C-d>", "<C-d>zz", opts)
-map("n", "<C-u>", "<C-u>zz", opts)
-map("n", "<C-p>", ":FZF<CR>", opts)
-map("v", "<C-j>", ":m '>+1<CR>gv=gv", opts)
-map("v", "<C-k>", ":m '<-2<CR>gv=gv", opts)
+local function smart_scroll(key)
+    return function()
+        local curr_line = vim.fn.line(".")
+        local last_line = vim.fn.line("$")
+
+        local k = vim.api.nvim_replace_termcodes(key, true, false, true)
+
+        vim.api.nvim_feedkeys(k, "n", false)
+
+        local new_line = vim.fn.line(".")
+
+        if curr_line == 1 then
+            vim.cmd("normal! " .. math.min(30, last_line - 1) .. "j")
+        end
+
+        if new_line == last_line or last_line - new_line < 30 then
+            vim.cmd("normal! zz")
+        end
+    end
+end
+
+vim.keymap.set("n", "<C-d>", smart_scroll("<C-d>"), { desc = "Scroll down and center at bottom" })
+vim.keymap.set("n", "<C-u>", smart_scroll("<C-u>"), { desc = "Scroll up and center at top" })
+
+-- map("n", "<C-d>", "<C-d>zz", opts)
+-- map("n", "<C-u>", "<C-u>zz", opts)
+-- map("n", "<C-d>", "15jzz", opts)
+-- map("n", "<C-u>", "15kzz", opts)
 map("n", "<C-o>", "o<ESC>", opts)
 
 -- Map both <C-/> and <C-_> for cross-platform compatibility (macOS sends <C-/>)
-map("n", "<C-/>", "<cmd>call nerdcommenter#Comment('n', 'Toggle')<CR>", opts)
-map("v", "<C-/>", ":call nerdcommenter#Comment('x', 'Toggle')<CR>gv", opts)
-map("n", "<C-_>", "<cmd>call nerdcommenter#Comment('n', 'Toggle')<CR>", opts)
-map("v", "<C-_>", ":call nerdcommenter#Comment('x', 'Toggle')<CR>gv", opts)
+map("n", "<C-/>", "gcc", { remap = true, silent = true, desc = "Comment" })
+map("v", "<C-/>", "gc", { remap = true, silent = true, desc = "Comment" })
+map("n", "<C-_>", "gcc", { remap = true, silent = true, desc = "Comment" })
+map("v", "<C-_>", "gc", { remap = true, silent = true, desc = "Comment" })
 
-map("n", "<leader>a", 'ggVG', opts)
+map("n", "<leader>a", "ggVG", opts)
 
 map("n", "<leader>y", '"+y', opts)
 map("v", "<leader>y", '"+y', opts)
@@ -32,24 +58,38 @@ map("v", "<leader>Y", '"+Y', opts)
 
 map("n", "<leader>p", '"+p', opts)
 map("v", "<leader>p", '"+p', opts)
+map("n", "<leader>P", '"+P', opts)
+map("v", "<leader>P", '"+P', opts)
 
 map("n", "<C-Tab>", ":bnext<CR>", opts)
 map("n", "<C-S-Tab>", ":bprevious<CR>", opts)
-map("n", "<C-.>", ":bnext<CR>", opts)
-map("n", "<C-,>", ":bprevious<CR>", opts)
+map("n", "<S-L>", ":bnext<CR>", opts)
+map("n", "<S-H>", ":bprevious<CR>", opts)
 
-map("n", "<leader>bn", ":bnext<CR>", opts)
-map("n", "<leader>bp", ":bprevious<CR>", opts)
-map("n", "<leader>bd", ":bdelete<CR>", opts)
+map("n", "<leader>bn", ":bnext<CR>", { silent = true, desc = "Next buffer" })
+map("n", "<leader>bp", ":bprevious<CR>", { silent = true, desc = "Previous buffer" })
+
+map("n", "<leader>bD", function()
+    Snacks.bufdelete()
+end, { desc = "Delete Buffer" })
+
+map("n", "<leader>bd", "<cmd>:bd<cr>", { desc = "Delete Buffer and Window" })
 
 map("n", "<leader>bo", function()
-  local current = vim.api.nvim_get_current_buf()
-  for _, buf in ipairs(vim.api.nvim_list_bufs()) do
-    if buf ~= current
-      and vim.api.nvim_buf_is_loaded(buf)
-      and not vim.api.nvim_buf_get_option(buf, "modified")
-    then
-      vim.api.nvim_buf_delete(buf, {})
-    end
-  end
-end, { desc = "Close other buffers (skip modified)" })
+    Snacks.bufdelete.other()
+end, { desc = "Delete Other Buffers" })
+
+map("n", "<leader>gm", "<cmd>GitOpenModified<cr>", { desc = "Open all modified on git" })
+map("n", "<leader>gg", function()
+    Snacks.lazygit()
+end, { desc = "Lazygit (cwd)" })
+
+map("n", "<leader>gb", function()
+    Snacks.git.blame_line()
+end, { desc = "Git Blame Line" })
+
+map("n", "<leader>gh", ":GitGutterLineHighlightsToggle<CR>", { desc = "Toggle GitGutter line highlights" })
+
+map("n", "<leader>.", function()
+    Snacks.scratch()
+end, { desc = "Toggle Scratch Buffer" })
