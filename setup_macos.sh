@@ -26,6 +26,10 @@ brew install eza
 brew install zoxide
 brew install bat
 
+# Devops
+brew install awscli
+brew install opentofu
+
 brew install --cask keepassxc
 
 brew install --cask karabiner-elements
@@ -56,5 +60,8 @@ ln -sf $PWD/vim/vimrc $HOME/.vimrc
 
 mkdir -p $HOME/.config/ghostty
 ln -sf $PWD/ghostty/ghostty_macos $HOME/.config/ghostty/config
+
+mkdir -p $HOME/.config/yazi
+ln -sf $PWD/yazi/keymap.toml $HOME/.config/yazi/keymap.toml
 
 echo 'Done!'

@@ -1,0 +1,15 @@
+[[mgr.prepend_keymap]]
+on   = "<Esc>"
+run = "close"
+desc = "Quit Yazi"
+
+[[mgr.prepend_keymap]]
+on   = [ "<C-d>" ]
+run  = "seek 10"
+desc = "Scroll preview down"
+
+[[mgr.prepend_keymap]]
+on   = [ "<C-u>" ]
+run  = "seek -10"
+desc = "Scroll preview up"
+
