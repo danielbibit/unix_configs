@@ -222,6 +222,8 @@ return {
         "nvim-telescope/telescope.nvim",
         dependencies = { "nvim-lua/plenary.nvim" },
         config = function()
+            local actions = require("telescope.actions")
+
             require("telescope").setup({
                 defaults = {
                     hidden = true,
@@ -229,6 +231,7 @@ return {
                     mappings = {
                         ["i"] = {
                             ["<CR>"] = utils.plugins.telescope_open_single_or_multi,
+                            ["<esc>"] = actions.close,
                         },
                     },
                 },
